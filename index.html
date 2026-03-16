@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Colmena — Navegador Anónimo</title>
+  <link rel="stylesheet" href="css/browser.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div id="bw">
+
+  <div id="titlebar">
+    <div id="wc"><span class="wcb wc-x"></span><span class="wcb wc-n"></span><span class="wcb wc-m"></span></div>
+    <div id="brand"><img src="assets/logo.svg" alt="">LA COLMENA</div>
+    <div id="tor-badge"><span class="tor-pulse"></span>TOR ACTIVO</div>
+  </div>
+
+  <div id="tabbar">
+    <div id="tabs-container">
+      <!-- tabs rendered by JS -->
+    </div>
+    <button id="newtab" title="Nueva pestaña">+</button>
+  </div>
+
+  <div id="navbar">
+    <div style="display:flex;gap:2px">
+      <button class="nbtn" id="btn-back" title="Atrás" disabled>←</button>
+      <button class="nbtn" id="btn-fwd"  title="Adelante" disabled>→</button>
+      <button class="nbtn" id="btn-reload" title="Recargar">↻</button>
+      <button class="nbtn" id="btn-home" title="Inicio">⌂</button>
+    </div>
+    <div id="addrwrap">
+      <span class="addr-hex">⬡</span>
+      <span class="addr-lock">🔒</span>
+      <input id="addr" type="text" placeholder="Ingresar dirección .onion…" spellcheck="false" autocomplete="off">
+      <button id="gobtn">IR</button>
+    </div>
+    <div style="display:flex;gap:2px">
+      <button class="nbtn" id="btn-bk" title="Marcadores">☆</button>
+      <button class="nbtn" id="btn-cfg" title="Configuración">⚙</button>
+    </div>
+  </div>
+
+  <div id="infobar">
+    <span class="ib-item"><span class="dot dot-g"></span>Conectado · 3 nodos relay</span>
+    <span class="ib-sep">|</span>
+    <span class="ib-item">Circuito: <span class="ib-hi" id="ib-circuit">DE → NL → SE</span></span>
+    <span class="ib-sep">|</span>
+    <span class="ib-item">Anonimato: <span class="ib-hi">ALTO</span></span>
+    <span class="ib-sep">|</span>
+    <span class="ib-item">IP: <span class="ib-hi" id="ib-ip">89.247.xx.xx</span></span>
+  </div>
+
+  <div id="progwrap"><div id="prog"></div></div>
+
+  <div id="framewrap">
+    <iframe id="pageframe" src="pages/home.html" title="Página"></iframe>
+
+    <!-- TOR animation overlay -->
+    <div id="toroverlay" class="hidden">
+      <div id="torbox">
+        <div id="tor-logo-anim"><img src="assets/logo.svg" width="54" height="54" alt=""></div>
+        <div id="tornodes">
+          <div class="tn" id="tn-you">TÚ</div>
+          <span class="tn-arrow">──●──</span>
+          <div class="tn" id="tn-r1">NODO 1</div>
+          <span class="tn-arrow">──●──</span>
+          <div class="tn" id="tn-r2">NODO 2</div>
+          <span class="tn-arrow">──●──</span>
+          <div class="tn" id="tn-r3">NODO 3</div>
+          <span class="tn-arrow">──●──</span>
+          <div class="tn" id="tn-dst">DESTINO</div>
+        </div>
+        <div id="tormsgs">
+          <div class="tm" id="tm1">▶ Inicializando circuito TOR…</div>
+          <div class="tm" id="tm2">▶ Seleccionando nodos relay…</div>
+          <div class="tm" id="tm3">▶ Estableciendo túnel cifrado…</div>
+          <div class="tm" id="tm4">▶ Resolviendo servicio oculto…</div>
+          <div class="tm" id="tm5">▶ Verificando descriptor .onion…</div>
+          <div class="tm" id="tm6">✔ Conexión establecida.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MINIGAME overlay -->
+    <div id="mgoverlay" class="hidden">
+      <div id="mgbox">
+        <div class="mg-timer">TIEMPO: <span id="mg-time">30</span>s</div>
+        <div class="mg-header">
+          <div class="mg-target">ACCESO REQUERIDO A</div>
+          <div class="mg-site" id="mg-site-label">servicio.onion</div>
+        </div>
+        <div class="mg-dots" id="mg-dots"></div>
+        <div id="mg-content"></div>
+      </div>
+    </div>
+
+    <!-- Bookmarks -->
+    <div id="bkpanel">
+      <div class="bk-hdr"><span>MARCADORES</span><button class="bk-close" id="bk-close">✕</button></div>
+      <div class="bk-body">
+        <div class="bk-group">
+          <div class="bk-glabel">MERCADOS</div>
+          <a class="bk-item" href="#" data-page="marketcore.onion">⬡ marketcore.onion</a>
+          <a class="bk-item" href="#" data-page="cryptex.onion">⬡ cryptex.onion</a>
+        </div>
+        <div class="bk-group">
+          <div class="bk-glabel">COMUNIDAD</div>
+          <a class="bk-item" href="#" data-page="cryptoforum.onion">⬡ cryptoforum.onion</a>
+          <a class="bk-item" href="#" data-page="ghostchat.onion">⬡ ghostchat.onion</a>
+          <a class="bk-item" href="#" data-page="neonews.onion">⬡ neonews.onion</a>
+        </div>
+        <div class="bk-group">
+          <div class="bk-glabel">INFORMACIÓN</div>
+          <a class="bk-item" href="#" data-page="shadowwiki.onion">⬡ shadowwiki.onion</a>
+          <a class="bk-item" href="#" data-page="darksearch.onion">⬡ darksearch.onion</a>
+        </div>
+        <div class="bk-group">
+          <div class="bk-glabel">SERVICIOS</div>
+          <a class="bk-item" href="#" data-page="mailnode.onion">⬡ mailnode.onion</a>
+          <a class="bk-item" href="#" data-page="datavault.onion">⬡ datavault.onion</a>
+          <a class="bk-item" href="#" data-page="idforge.onion">⬡ idforge.onion</a>
+          <a class="bk-item" href="#" data-page="blackboard.onion">⬡ blackboard.onion</a>
+          <a class="bk-item" href="#" data-page="phantomvpn.onion">⬡ phantomvpn.onion</a>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Notification stack -->
+    <div id="notif-stack"></div>
+
+    <!-- Malware / Threat overlay -->
+    <div id="malware-overlay" class="hidden">
+      <div class="malware-bg-glitch"></div>
+      <div id="threat-box"></div>
+    </div>
+
+    <!-- Whitehat messenger -->
+    <div id="whitehat-messenger" class="hidden">
+      <div class="wh-chat">
+        <div class="wh-header">
+          <span class="wh-avatar">🎩</span>
+          <span class="wh-name" id="wh-name">ph4ntom_guard</span>
+          <span class="wh-badge">WHITEHAT</span>
+          <button class="wh-close-btn" id="wh-close">✕</button>
+        </div>
+        <div class="wh-messages" id="wh-messages"></div>
+        <div class="wh-actions">
+          <button class="wh-action-btn" id="wh-activate-vpn">🛡 Activar VPN</button>
+          <button class="wh-action-btn" id="wh-dismiss">Ignorar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fake download bar -->
+    <div class="fake-dl hidden" id="fake-dl">
+      <span class="dl-icon">⬇</span>
+      <span class="dl-name" id="dl-name">archivo.exe</span>
+      <div class="dl-bar-wrap"><div class="dl-bar" id="dl-bar"></div></div>
+      <span class="dl-pct" id="dl-pct">0%</span>
+      <button class="dl-cancel" id="dl-cancel">✕</button>
+    </div>
+
+    <!-- ═══ SETTINGS PANEL ═══ -->
+    <div id="cfg-panel">
+      <div class="cfg-hdr">
+        <span>⚙ CONFIGURACIÓN</span>
+        <button class="cfg-close" id="cfg-close">✕</button>
+      </div>
+
+      <!-- Tabs -->
+      <div class="cfg-tabs">
+        <div class="cfg-tab on" data-tab="appearance">🎨 Apariencia</div>
+        <div class="cfg-tab" data-tab="vpn">🛡 VPN</div>
+        <div class="cfg-tab" data-tab="history">🕐 Historial</div>
+      </div>
+
+      <div class="cfg-body">
+
+        <!-- ── APPEARANCE TAB ── -->
+        <div id="tab-appearance" class="cfg-tab-content">
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ MODO DE VISUALIZACIÓN</div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Modo Oscuro</div>
+                <div class="cfg-sublabel">Tema por defecto de La Colmena</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="toggle-dark" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Modo Claro</div>
+                <div class="cfg-sublabel">Interfaz de alta luminosidad</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="toggle-light">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ COLOR DE ACENTO</div>
+            <div class="cfg-row">
+              <div class="cfg-label">Color principal del navegador</div>
+            </div>
+            <div class="cfg-accent-row">
+              <div class="accent-swatch on" data-color="blue"    title="Azul"    style="background:#3d8bff"></div>
+              <div class="accent-swatch"    data-color="cyan"    title="Cian"    style="background:#22d4f5"></div>
+              <div class="accent-swatch"    data-color="green"   title="Verde"   style="background:#22e08a"></div>
+              <div class="accent-swatch"    data-color="purple"  title="Morado"  style="background:#a855f7"></div>
+              <div class="accent-swatch"    data-color="orange"  title="Naranja" style="background:#f97316"></div>
+              <div class="accent-swatch"    data-color="red"     title="Rojo"    style="background:#f04060"></div>
+              <div class="accent-swatch"    data-color="gold"    title="Dorado"  style="background:#f5c842"></div>
+            </div>
+          </div>
+
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ OPCIONES</div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Efecto scanlines</div>
+                <div class="cfg-sublabel">Líneas de CRT sobre la interfaz</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="toggle-scanlines" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Animación TOR</div>
+                <div class="cfg-sublabel">Mostrar conexión al entrar a sitios</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="toggle-tor-anim" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Minijuegos de acceso</div>
+                <div class="cfg-sublabel">Desafíos al entrar a sitios por primera vez</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="toggle-minigames" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div><!-- /appearance -->
+
+        <!-- ── VPN TAB ── -->
+        <div id="tab-vpn" class="cfg-tab-content" style="display:none">
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ ESTADO DE CONEXIÓN</div>
+            <div class="vpn-status-box">
+              <div class="vpn-indicator" id="vpn-indicator">🛡️</div>
+              <div class="vpn-status-label" id="vpn-status-label">DESCONECTADO</div>
+              <div class="vpn-ip-display" id="vpn-ip-display">IP real: <span>sin enmascarar</span></div>
+            </div>
+            <div class="vpn-stats" id="vpn-stats" style="display:none">
+              <div class="vpn-stat-item">
+                <div class="vpn-stat-val" id="vpn-ping">—</div>
+                <div class="vpn-stat-lbl">PING (ms)</div>
+              </div>
+              <div class="vpn-stat-item">
+                <div class="vpn-stat-val" id="vpn-speed">—</div>
+                <div class="vpn-stat-lbl">VELOCIDAD</div>
+              </div>
+              <div class="vpn-stat-item">
+                <div class="vpn-stat-val" id="vpn-time">—</div>
+                <div class="vpn-stat-lbl">TIEMPO</div>
+              </div>
+              <div class="vpn-stat-item">
+                <div class="vpn-stat-val" id="vpn-enc">AES-256</div>
+                <div class="vpn-stat-lbl">CIFRADO</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ SERVIDOR</div>
+            <select class="vpn-country-sel" id="vpn-country">
+              <option value="de">🇩🇪 Alemania — Frankfurt</option>
+              <option value="nl">🇳🇱 Países Bajos — Ámsterdam</option>
+              <option value="ch">🇨🇭 Suiza — Zúrich</option>
+              <option value="se">🇸🇪 Suecia — Estocolmo</option>
+              <option value="is">🇮🇸 Islandia — Reikiavik</option>
+              <option value="us">🇺🇸 EE.UU. — Nueva York</option>
+              <option value="jp">🇯🇵 Japón — Tokio</option>
+              <option value="br">🇧🇷 Brasil — São Paulo</option>
+              <option value="sg">🇸🇬 Singapur</option>
+              <option value="au">🇦🇺 Australia — Sídney</option>
+            </select>
+            <button class="vpn-connect-btn" id="vpn-btn">CONECTAR</button>
+          </div>
+
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ OPCIONES VPN</div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Kill Switch</div>
+                <div class="cfg-sublabel">Cortar red si VPN se desconecta</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="vpn-killswitch" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Tor-sobre-VPN</div>
+                <div class="cfg-sublabel">Doble capa de privacidad</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="vpn-tor-over" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="cfg-row">
+              <div>
+                <div class="cfg-label">Sin registros</div>
+                <div class="cfg-sublabel">Política no-log activa</div>
+              </div>
+              <label class="toggle-wrap">
+                <input type="checkbox" class="toggle-inp" id="vpn-nolog" checked>
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+        </div><!-- /vpn -->
+
+        <!-- ── HISTORY TAB ── -->
+        <div id="tab-history" class="cfg-tab-content" style="display:none">
+          <div class="cfg-section">
+            <div class="cfg-section-title">◈ HISTORIAL DE NAVEGACIÓN</div>
+            <input type="text" class="history-search" id="hist-search" placeholder="Buscar en historial…">
+            <div id="hist-list">
+              <div class="history-empty">El historial aparecerá aquí a medida que navegues.</div>
+            </div>
+            <button class="cfg-clear-btn" id="hist-clear">🗑 Borrar todo el historial</button>
+          </div>
+        </div><!-- /history -->
+
+      </div><!-- /cfg-body -->
+    </div><!-- /cfg-panel -->
+
+  </div><!-- /framewrap -->
+</div>
+
+<script src="js/browser.js"></script>
+<script src="js/threats.js"></script>
+</body>
+</html>

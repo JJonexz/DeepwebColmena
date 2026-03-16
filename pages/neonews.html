@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NeoNews — Underground Wire</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#090909;color:#ccc;font-family:'Courier Prime','Courier New',monospace}
+.hdr{background:#050505;border-bottom:2px solid #ddaa00;padding:9px 0}
+.hdr-in{max-width:1080px;margin:0 auto;padding:0 18px;
+  display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:24px;font-weight:700;color:#ddaa00;letter-spacing:4px;
+  text-shadow:0 0 16px rgba(221,170,0,.25)}
+.logo small{display:block;font-size:9px;color:#444;font-weight:400;letter-spacing:2px}
+.hdr-date{font-size:10px;color:#333;letter-spacing:1px}
+
+.breaking{background:#ddaa00;color:#000;padding:4px 0;overflow:hidden;
+  font-size:10px;font-weight:700;letter-spacing:1px}
+.brk-in{max-width:1080px;margin:0 auto;padding:0 18px;display:flex;gap:10px}
+.brk-label{white-space:nowrap}
+.brk-txt{animation:ticker 22s linear infinite;white-space:nowrap}
+@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-200%)}}
+
+.cats{background:#0a0a0a;border-bottom:1px solid #1a1a1a;padding:5px 0}
+.cats-in{max-width:1080px;margin:0 auto;padding:0 18px;display:flex;gap:4px;flex-wrap:wrap}
+.cat{padding:3px 9px;font-size:10px;letter-spacing:1px;color:#555;cursor:pointer;
+  border:1px solid transparent;transition:all .15s}
+.cat:hover,.cat.on{color:#ddaa00;border-color:#ddaa00}
+
+.layout{max-width:1080px;margin:0 auto;padding:16px 18px;
+  display:grid;grid-template-columns:1fr 280px;gap:18px}
+.lead{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin-bottom:18px}
+.lead-main{grid-column:1/-1;background:#111;padding:18px;border:1px solid #1a1a1a;
+  border-bottom:none;cursor:pointer;transition:background .15s}
+.lead-main:hover{background:#131313}
+.article{background:#111;padding:13px;border:1px solid #1a1a1a;
+  cursor:pointer;transition:background .15s}
+.article:hover{background:#131313}
+.art-tag{font-size:8px;letter-spacing:2px;font-weight:700;color:#ddaa00;margin-bottom:5px}
+.art-title{font-size:12px;color:#ddd;line-height:1.4;margin-bottom:5px;font-weight:700}
+.lead-main .art-title{font-size:18px;margin-bottom:8px}
+.art-meta{font-size:10px;color:#333}
+.art-meta span{color:#555}
+.art-desc{font-size:11px;color:#666;line-height:1.6;margin-top:7px}
+
+.list-items{display:flex;flex-direction:column;gap:1px}
+.li{background:#111;padding:9px 13px;border:1px solid #1a1a1a;
+  cursor:pointer;transition:background .15s;display:flex;gap:11px}
+.li:hover{background:#131313}
+.li-num{font-size:15px;font-weight:700;color:#1e1e1e;flex-shrink:0;width:22px}
+.li-title{font-size:12px;color:#aaa;line-height:1.4;margin-bottom:3px}
+.li-meta{font-size:10px;color:#333}
+
+.sidebar{}
+.widget{background:#111;border:1px solid #1a1a1a;margin-bottom:12px;overflow:hidden}
+.w-title{background:#1a1400;border-bottom:1px solid #2a2000;padding:6px 11px;
+  font-size:9px;letter-spacing:2px;font-weight:700;color:#ddaa00}
+.w-body{padding:9px 11px}
+.ticker-row{display:flex;justify-content:space-between;align-items:center;
+  padding:3px 0;border-bottom:1px solid #1a1a1a;font-size:11px}
+.ticker-row:last-child{border-bottom:none}
+.tr-name{color:#666}
+.tr-val{font-weight:700}
+.up{color:#44dd66}.dn{color:#dd4444}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="logo">NEO<span style="color:#888">NEWS</span><small>CABLE UNDERGROUND · DESDE 2018</small></div>
+    <div class="hdr-date">14 DE MARZO, 2024 · UTC 18:42</div>
+  </div>
+</div>
+
+<div class="breaking">
+  <div class="brk-in">
+    <span class="brk-label">◈ ÚLTIMO:</span>
+    <span class="brk-txt">Hack a exchange confirmado — $42M en ETH movidos a mezclador · Nuevo zero-day en VPN popular · Europol anuncia operación contra mercados darknet · XMR sube 18% por preocupaciones de privacidad</span>
+  </div>
+</div>
+
+<div class="cats">
+  <div class="cats-in">
+    <div class="cat on">TODOS</div>
+    <div class="cat">SEGURIDAD</div>
+    <div class="cat">CRIPTO</div>
+    <div class="cat">FILTRACIONES</div>
+    <div class="cat">FUERZAS DEL ORDEN</div>
+    <div class="cat">PRIVACIDAD</div>
+    <div class="cat">MERCADOS</div>
+    <div class="cat">POLÍTICA</div>
+  </div>
+</div>
+
+<div class="layout">
+  <div>
+    <div class="lead">
+      <div class="lead-main article">
+        <div class="art-tag">◈ PORTADA · SEGURIDAD</div>
+        <div class="art-title">Investigador anónimo publica zero-day que afecta a 40 millones de usuarios de VPN en todo el mundo</div>
+        <div class="art-meta">Por <span>anon_reporter_07</span> · Hace 2 horas · <span>4,821 vistas</span></div>
+        <div class="art-desc">Un investigador conocido solo como "void_hunter" ha publicado código de exploit completo para una vulnerabilidad crítica en un popular cliente VPN comercial. La vulnerabilidad permite ejecución remota de código sin autenticación. El proveedor fue notificado pero aún no ha lanzado un parche…</div>
+      </div>
+      <div class="article">
+        <div class="art-tag">◈ CRIPTO</div>
+        <div class="art-title">$42M en ETH movidos por mezclador tras brecha en exchange — análisis on-chain</div>
+        <div class="art-meta">Por <span>chain_watcher</span> · Hace 4h</div>
+        <div class="art-desc">Análisis on-chain confirma que los fondos del hack de ayer están siendo lavados a través de una serie de servicios de mezcla…</div>
+      </div>
+      <div class="article">
+        <div class="art-tag">◈ FUERZAS DEL ORDEN</div>
+        <div class="art-title">Operación conjunta de Europol ataca 3 mercados darknet simultáneamente</div>
+        <div class="art-meta">Por <span>darkwatch</span> · Hace 6h</div>
+        <div class="art-desc">Operación AURORA SPIDER realizó redadas coordinadas en 12 países. Servidores incautados en Alemania y Países Bajos…</div>
+      </div>
+    </div>
+
+    <div class="list-items">
+      ${[
+        ['FILTRACIONES',       'Denunciante entrega 200GB de datos de vigilancia corporativa en DataVault', 'leak_handler',  'Hace 8h',  '3.2K'],
+        ['PRIVACIDAD',         'Nueva actualización de Tor Browser parchea crítica vulnerabilidad de deanonimización', 'tor_watcher', 'Hace 10h','6.1K'],
+        ['MERCADOS',           'Mercado darknet líder anuncia migración a pagos solo XMR', 'mkt_observer', 'Hace 12h','4.8K'],
+        ['SEGURIDAD',          'Botnet de 2.4 millones de dispositivos desmantelada por fuerza de tarea internacional', 'infosec_news','Hace 14h','2.9K'],
+        ['CRIPTO',             'Adopción de monedas de privacidad aumenta 34% tras turbulencias del sector bancario', 'coin_reporter','Hace 16h','7.3K'],
+        ['POLÍTICA',           'Tres países presionan por puertas traseras obligatorias en cifrado — análisis', 'freedom_press','Hace 1d', '11.2K'],
+        ['SEGURIDAD',          'Herramientas OSINT con IA facilitan deanonimización — advertencia de expertos', 'sec_research', 'Hace 1d', '9.4K'],
+        ['FILTRACIONES',       'Documento filtrado revela programa de vigilancia masiva contra periodistas', 'whistle_node', 'Hace 2d', '15.7K'],
+      ].map(([tag,title,by,time,views],i)=>`
+      <div class="li">
+        <div class="li-num">${i+1}</div>
+        <div>
+          <div class="art-tag" style="font-size:8px;margin-bottom:3px">${tag}</div>
+          <div class="li-title">${title}</div>
+          <div class="li-meta">Por <span style="color:#555">${by}</span> · ${time} · ${views} vistas</div>
+        </div>
+      </div>`).join('')}
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <div class="widget">
+      <div class="w-title">◈ PRECIOS CRIPTO</div>
+      <div class="w-body">
+        ${[['BTC','$38,420','+2.3%',true],['XMR','$142.80','+0.8%',true],['ETH','$2,140','-0.5%',false],['ZEC','$28.40','+4.1%',true],['LTC','$89.20','-1.2%',false]].map(([n,p,c,up])=>
+          `<div class="ticker-row">
+            <span class="tr-name">${n}</span>
+            <span class="tr-val ${up?'up':'dn'}">${p}</span>
+            <span class="${up?'up':'dn'}">${c}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-title">◈ ESTADO DE LA RED</div>
+      <div class="w-body" style="font-size:11px;color:#444;line-height:2.1">
+        <div>Relays Tor: <span style="color:#44dd66">6,847 activos</span></div>
+        <div>Nodos I2P: <span style="color:#44dd66">52,109 activos</span></div>
+        <div>Mercados: <span style="color:#ddaa44">14 en línea</span></div>
+        <div>Caídos: <span style="color:#dd4444">3 sin conexión</span></div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-title">◈ ENVIAR PISTA</div>
+      <div class="w-body">
+        <textarea style="width:100%;background:#0a0a0a;border:1px solid #1a1a1a;
+          color:#777;font-family:monospace;font-size:11px;padding:7px;
+          resize:vertical;height:75px;border-radius:3px;outline:none"
+          placeholder="Pega tu pista aquí. Se recomienda PGP."></textarea>
+        <button style="width:100%;background:#ddaa00;border:none;color:#000;
+          font-family:monospace;font-size:10px;font-weight:700;padding:7px;
+          border-radius:3px;cursor:pointer;margin-top:5px;letter-spacing:1px">
+          ENVIAR ANÓNIMO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.cat').forEach(c=>{
+  c.addEventListener('click',()=>{
+    document.querySelectorAll('.cat').forEach(x=>x.classList.remove('on'));
+    c.classList.add('on');
+  });
+});
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TulipánHolanda — Floristería Online</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fffef8;color:#333;font-family:Georgia,serif;font-size:14px}
+header{background:#2d6a2d;color:#fff;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.hlogo{font-size:20px;font-weight:700;letter-spacing:1px}
+.hlogo span{color:#ffe066}
+nav a{color:#cde8cd;text-decoration:none;margin-left:18px;font-size:13px;font-family:Arial,sans-serif}
+nav a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,#e8f5e9,#fffde7);padding:40px 24px;text-align:center;border-bottom:1px solid #ddd}
+.hero h1{font-size:28px;color:#2d6a2d;margin-bottom:8px}
+.hero p{color:#666;font-size:14px;font-family:Arial,sans-serif}
+.main{max-width:960px;margin:0 auto;padding:28px 24px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border:1px solid #e0e0e0;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.07)}
+.card-img{height:140px;display:flex;align-items:center;justify-content:center;font-size:60px;background:#f9f9f9}
+.card-body{padding:14px}
+.card-name{font-size:15px;font-weight:700;color:#2d6a2d;margin-bottom:4px}
+.card-desc{font-size:12px;color:#888;font-family:Arial,sans-serif;margin-bottom:8px}
+.card-price{font-size:14px;font-weight:700;color:#e67e22}
+.card-btn{background:#2d6a2d;color:#fff;border:none;padding:7px 16px;border-radius:3px;cursor:pointer;font-size:12px;margin-top:8px;width:100%;transition:background .15s}
+.card-btn:hover{background:#1e4d1e}
+footer{background:#2d6a2d;color:#cde8cd;padding:20px 24px;font-size:12px;font-family:Arial,sans-serif;margin-top:40px}
+.footer-in{max-width:960px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+/* HIDDEN TRIGGER — very subtle, looks like normal footer text */
+#secret-link{color:#2d7a2d;text-decoration:none;font-size:11px;cursor:pointer;opacity:.6;transition:opacity .2s}
+#secret-link:hover{opacity:1;color:#ffe066}
+.notice{background:#fff8e1;border:1px solid #ffe082;padding:10px 20px;font-size:12px;font-family:Arial,sans-serif;color:#555;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hlogo">🌷 Tulipán<span>Holanda</span></div>
+  <nav>
+    <a>Catálogo</a>
+    <a>Envíos</a>
+    <a>Mayoristas</a>
+    <a>Contacto</a>
+  </nav>
+</header>
+
+<div class="notice">🚚 Envío gratis en pedidos mayores a $50 — Flores frescas directo desde los campos holandeses</div>
+
+<div class="hero">
+  <h1>Flores Frescas de Holanda</h1>
+  <p>Importamos directamente desde los mejores cultivos de los Países Bajos. Entrega en 24-48hs.</p>
+</div>
+
+<div class="main">
+  <div class="card"><div class="card-img">🌷</div>
+    <div class="card-body"><div class="card-name">Tulipanes Rojos</div>
+      <div class="card-desc">Docena de tulipanes rojos premium. Tallo largo, perfectos para regalos.</div>
+      <div class="card-price">$18.90</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-img">🌹</div>
+    <div class="card-body"><div class="card-name">Rosas Holandesas</div>
+      <div class="card-desc">Las más fragantes del mercado. Variedad exclusiva de invernadero.</div>
+      <div class="card-price">$24.50</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-img">🌸</div>
+    <div class="card-body"><div class="card-name">Peonías Blancas</div>
+      <div class="card-desc">Elegantes y aromáticas. Ideal para decoración de eventos.</div>
+      <div class="card-price">$32.00</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-img">🌻</div>
+    <div class="card-body"><div class="card-name">Girasoles</div>
+      <div class="card-desc">Frescos y luminosos. Cultivo nacional y holandés mezclado.</div>
+      <div class="card-price">$12.00</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-img">💐</div>
+    <div class="card-body"><div class="card-name">Ramo Primaveral</div>
+      <div class="card-desc">Composición mixta de temporada. 20 flores variadas.</div>
+      <div class="card-price">$45.00</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+  <div class="card"><div class="card-img">🌺</div>
+    <div class="card-body"><div class="card-name">Hibiscos Exóticos</div>
+      <div class="card-desc">Importación directa. Colores intensos, floración prolongada.</div>
+      <div class="card-price">$28.00</div>
+      <button class="card-btn">Agregar al carrito</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-in">
+    <span>© 2024 TulipánHolanda S.R.L. · Todos los derechos reservados</span>
+    <span>
+      <a style="color:#cde8cd;text-decoration:none;margin-right:12px">Términos</a>
+      <a style="color:#cde8cd;text-decoration:none;margin-right:12px">Privacidad</a>
+      <!-- Hidden: this looks like a normal footer link -->
+      <a id="secret-link" title="Catálogo especial mayoristas">Catálogo B2B ▸</a>
+    </span>
+  </div>
+</footer>
+
+<script>
+// Counter - user must click "Catálogo B2B" 3 times to reveal real access
+let clicks = 0;
+document.getElementById('secret-link').addEventListener('click', function(e){
+  e.preventDefault();
+  clicks++;
+  if(clicks === 1) this.textContent = 'Catálogo B2B ▸▸';
+  if(clicks === 2) this.textContent = 'Catálogo B2B ▸▸▸';
+  if(clicks >= 3) {
+    this.textContent = '◈ Acceso especial...';
+    this.style.color = '#ffe066';
+    setTimeout(()=> window.parent.postMessage({action:'surfacePassed',url:'marketcore.onion'},'*'), 600);
+  }
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>404 — Servicio No Encontrado</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#06060a;display:flex;align-items:center;justify-content:center;
+  min-height:100vh;font-family:var(--font)}
+.box{text-align:center;max-width:480px;padding:40px;
+  border:1px solid #2a2a3a;background:#0c0c12;border-radius:6px}
+.code{font-size:70px;font-weight:700;color:#e84545;line-height:1;
+  text-shadow:0 0 30px rgba(232,69,69,.3);margin-bottom:8px}
+.title{font-size:15px;color:#9090aa;letter-spacing:3px;margin-bottom:20px}
+.desc{font-size:11px;color:#4a4a60;line-height:1.9;margin-bottom:22px}
+.url-box{font-size:11px;color:#4a4a60;margin-bottom:22px}
+.url-box code{background:#06060a;padding:3px 8px;border-radius:3px;
+  color:#e84545;font-family:var(--font)}
+.actions{display:flex;gap:10px;justify-content:center}
+.abtn{background:#12121a;border:1px solid #2a2a3a;color:#9090aa;
+  font-family:var(--font);font-size:11px;padding:7px 16px;border-radius:3px;
+  cursor:pointer;letter-spacing:1px;transition:all .15s;text-decoration:none;display:inline-block}
+.abtn:hover{border-color:#3d8bff;color:#3d8bff}
+.blink{animation:bl 1s infinite}
+@keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
+.circuit{font-size:10px;color:#2a2a3a;margin-top:22px;letter-spacing:.5px}
+</style>
+</head>
+<body>
+<div class="box">
+  <div class="code">404</div>
+  <div class="title">SERVICIO OCULTO NO ENCONTRADO</div>
+  <div class="desc" id="desc">La dirección .onion no pudo ser resuelta.<br>
+    El servicio puede estar fuera de línea o la dirección es incorrecta.</div>
+  <div class="url-box">Solicitado: <code id="req-url">desconocido</code></div>
+  <div class="actions">
+    <a class="abtn" href="#" onclick="window.parent.postMessage({action:'navigate',url:''},'*')">⌂ Inicio</a>
+    <a class="abtn" href="#" onclick="window.parent.postMessage({action:'navigate',url:'darksearch.onion'},'*')">🔍 Buscar</a>
+    <a class="abtn" href="#" onclick="window.parent.postMessage({action:'navigate',url:document.getElementById('req-url').textContent},'*')">↻ Reintentar</a>
+  </div>
+  <div class="circuit">
+    CIRCUITO: FALLIDO &nbsp;·&nbsp; REINTENTAR EN 30s &nbsp;·&nbsp;
+    <span class="blink">█</span>
+  </div>
+</div>
+<script>
+const msgs = [
+  'La dirección .onion no pudo ser resuelta.<br>El servicio puede estar fuera de línea.',
+  'El servicio oculto no responde.<br>Puede haber sido cerrado o cambiado de dirección.',
+  'No se puede establecer conexión con el descriptor .onion.<br>Verifica la dirección e intenta de nuevo.',
+  'El circuito TOR no pudo alcanzar el destino.<br>El servicio puede estar temporalmente caído.',
+];
+document.getElementById('desc').innerHTML = msgs[Math.floor(Math.random()*msgs.length)];
+const params = new URLSearchParams(window.location.search);
+const url = params.get('url');
+if(url) document.getElementById('req-url').textContent = url;
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

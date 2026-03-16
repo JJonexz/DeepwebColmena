@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>La Colmena — Inicio</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#06060a;display:flex;flex-direction:column;align-items:center;
+  justify-content:flex-start;padding:50px 20px 40px;min-height:100vh}
+.logo-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:36px}
+.logo-wrap img{width:72px;height:72px;filter:drop-shadow(0 0 18px #3d8bff);
+  animation:glow 3s ease-in-out infinite}
+@keyframes glow{0%,100%{filter:drop-shadow(0 0 8px #3d8bff)}50%{filter:drop-shadow(0 0 24px #3d8bff)}}
+.site-title{font-size:26px;letter-spacing:10px;font-weight:700;color:#3d8bff;
+  text-shadow:0 0 18px rgba(245,200,66,.3)}
+.site-sub{font-size:10px;letter-spacing:3px;color:#4a4a60;margin-top:-4px}
+
+.ticker{width:100%;max-width:720px;background:#0c0c12;border:1px solid #2a2a3a;
+  padding:7px 14px;font-size:9px;color:#4a4a60;letter-spacing:.4px;overflow:hidden;
+  border-radius:3px;margin-bottom:24px}
+.ticker-in{white-space:nowrap;animation:ticker 30s linear infinite}
+@keyframes ticker{0%{transform:translateX(100%)}100%{transform:translateX(-200%)}}
+
+.searchbox{width:100%;max-width:540px;display:flex;gap:8px;margin-bottom:28px}
+.searchbox input{flex:1;background:#0c0c12;border:1px solid #2a2a3a;color:#e8e8f0;
+  font-family:var(--font);font-size:13px;padding:10px 14px;border-radius:4px;outline:none;
+  transition:border-color .2s,box-shadow .2s;letter-spacing:.3px}
+.searchbox input:focus{border-color:#3d8bff;box-shadow:0 0 0 2px rgba(61,139,255,.15)}
+.searchbox input::placeholder{color:#2a2a3a}
+.searchbox button{background:#3d8bff;border:none;color:#fff;font-family:var(--font);
+  font-size:10px;font-weight:700;letter-spacing:2px;padding:0 18px;border-radius:4px;
+  cursor:pointer;transition:background .15s}
+.searchbox button:hover{background:#c9a230}
+
+.section-lbl{font-size:9px;letter-spacing:3px;color:#4a4a60;font-weight:700;
+  margin-bottom:14px;width:100%;max-width:720px}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:10px;width:100%;max-width:720px;margin-bottom:40px}
+.card{background:#0c0c12;border:1px solid #2a2a3a;border-radius:6px;
+  padding:14px 16px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;gap:5px}
+.card:hover{border-color:#3d8bff;background:#12121a;transform:translateY(-2px);
+  box-shadow:0 4px 20px rgba(61,139,255,.08)}
+.card-icon{font-size:22px}
+.card-name{font-size:12px;font-weight:700;color:#e8e8f0;letter-spacing:.5px}
+.card-url{font-size:10px;color:#3d8bff;letter-spacing:.3px}
+.card-desc{font-size:10px;color:#4a4a60;line-height:1.4;margin-top:2px}
+
+.stats{display:flex;gap:32px;border-top:1px solid #2a2a3a;padding-top:28px;
+  width:100%;max-width:720px;justify-content:center}
+.stat{display:flex;flex-direction:column;align-items:center;gap:4px}
+.stat-v{font-size:20px;font-weight:700;color:#3d8bff}
+.stat-l{font-size:8px;letter-spacing:2px;color:#4a4a60}
+</style>
+</head>
+<body>
+<div class="logo-wrap">
+  <img src="../assets/logo.svg" alt="La Colmena">
+  <div class="site-title">LA COLMENA</div>
+  <div class="site-sub">NAVEGADOR ANÓNIMO v3.8.2 · TOR ACTIVADO</div>
+</div>
+
+<div class="ticker">
+  <div class="ticker-in">
+    ◈ Red: NOMINAL &nbsp;·&nbsp; Relays activos: 6,847 &nbsp;·&nbsp;
+    BTC: $38,420 (+2.3%) &nbsp;·&nbsp; XMR: $142.80 (+0.8%) &nbsp;·&nbsp;
+    ETH: $2,140 (-0.5%) &nbsp;·&nbsp; Nuevos listings en MarketCore: 23 &nbsp;·&nbsp;
+    CryptoForum: 847 usuarios activos &nbsp;·&nbsp; GhostChat: 1,234 en línea &nbsp;·&nbsp;
+    DataVault: 12 nuevas filtraciones &nbsp;·&nbsp; Aviso de seguridad: Rotar claves PGP regularmente
+  </div>
+</div>
+
+<div class="searchbox">
+  <input id="q" type="text" placeholder="Buscar o ingresar dirección .onion…">
+  <button onclick="doSearch()">BUSCAR</button>
+</div>
+
+<div class="section-lbl">◈ SERVICIOS OCULTOS SUGERIDOS</div>
+
+<div class="grid">
+  <div class="card" onclick="go('marketcore.onion')">
+    <div class="card-icon">🛒</div>
+    <div class="card-name">MarketCore</div>
+    <div class="card-url">marketcore.onion</div>
+    <div class="card-desc">Mercado anónimo con sistema de custodia</div>
+  </div>
+  <div class="card" onclick="go('cryptoforum.onion')">
+    <div class="card-icon">💬</div>
+    <div class="card-name">CryptoForum</div>
+    <div class="card-url">cryptoforum.onion</div>
+    <div class="card-desc">Foro de discusión underground</div>
+  </div>
+  <div class="card" onclick="go('shadowwiki.onion')">
+    <div class="card-icon">📖</div>
+    <div class="card-name">ShadowWiki</div>
+    <div class="card-url">shadowwiki.onion</div>
+    <div class="card-desc">Enciclopedia del conocimiento oculto</div>
+  </div>
+  <div class="card" onclick="go('mailnode.onion')">
+    <div class="card-icon">✉️</div>
+    <div class="card-name">MailNode</div>
+    <div class="card-url">mailnode.onion</div>
+    <div class="card-desc">Correo anónimo cifrado con PGP</div>
+  </div>
+  <div class="card" onclick="go('datavault.onion')">
+    <div class="card-icon">🗄️</div>
+    <div class="card-name">DataVault</div>
+    <div class="card-url">datavault.onion</div>
+    <div class="card-desc">Repositorio de documentos clasificados</div>
+  </div>
+  <div class="card" onclick="go('darksearch.onion')">
+    <div class="card-icon">🔍</div>
+    <div class="card-name">DarkSearch</div>
+    <div class="card-url">darksearch.onion</div>
+    <div class="card-desc">Motor de búsqueda de la dark web</div>
+  </div>
+  <div class="card" onclick="go('neonews.onion')">
+    <div class="card-icon">📰</div>
+    <div class="card-name">NeoNews</div>
+    <div class="card-url">neonews.onion</div>
+    <div class="card-desc">Noticias e informes de inteligencia</div>
+  </div>
+  <div class="card" onclick="go('ghostchat.onion')">
+    <div class="card-icon">👻</div>
+    <div class="card-name">GhostChat</div>
+    <div class="card-url">ghostchat.onion</div>
+    <div class="card-desc">Chat anónimo en tiempo real</div>
+  </div>
+  <div class="card" onclick="go('cryptex.onion')">
+    <div class="card-icon">₿</div>
+    <div class="card-name">CrypteX</div>
+    <div class="card-url">cryptex.onion</div>
+    <div class="card-desc">Exchange P2P sin KYC</div>
+  </div>
+  <div class="card" onclick="go('idforge.onion')">
+    <div class="card-icon">🪪</div>
+    <div class="card-name">ID Forge</div>
+    <div class="card-url">idforge.onion</div>
+    <div class="card-desc">Estudio de documentos ficticios</div>
+  </div>
+  <div class="card" onclick="go('blackboard.onion')">
+    <div class="card-icon">📋</div>
+    <div class="card-name">BlackBoard</div>
+    <div class="card-url">blackboard.onion</div>
+    <div class="card-desc">Tablero anónimo de trabajo</div>
+  </div>
+  <div class="card" onclick="go('phantomvpn.onion')">
+    <div class="card-icon">🛡️</div>
+    <div class="card-name">PhantomVPN</div>
+    <div class="card-url">phantomvpn.onion</div>
+    <div class="card-desc">Servicio VPN sin registros</div>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-v">847K</div><div class="stat-l">SERVICIOS OCULTOS</div></div>
+  <div class="stat"><div class="stat-v">2.4M</div><div class="stat-l">USUARIOS DIARIOS</div></div>
+  <div class="stat"><div class="stat-v">6,847</div><div class="stat-l">RELAYS ACTIVOS</div></div>
+  <div class="stat"><div class="stat-v">256-bit</div><div class="stat-l">CIFRADO</div></div>
+</div>
+
+<script>
+function go(url){ window.parent.postMessage({action:'navigate',url:url},'*'); }
+function doSearch(){
+  const v=document.getElementById('q').value.trim();
+  if(!v)return;
+  window.parent.postMessage({action:'navigate', url: v.includes('.onion') ? v : 'darksearch.onion?q='+encodeURIComponent(v)}, '*');
+}
+document.getElementById('q').addEventListener('keydown',e=>e.key==='Enter'&&doSearch());
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

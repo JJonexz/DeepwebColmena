@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>TechDiario — Noticias de tecnología</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#fff;font-family:Arial,sans-serif;color:#333}
+.hdr{border-bottom:3px solid #e63333;padding:10px 0}
+.hdr-in{max-width:1060px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:900;color:#e63333;letter-spacing:-1px}
+.logo span{color:#333}
+.date{font-size:11px;color:#888}
+.cats{background:#e63333;padding:0}
+.cats-in{max-width:1060px;margin:0 auto;padding:0 16px;display:flex}
+.cat{padding:8px 14px;color:#ffcccc;font-size:12px;cursor:pointer;transition:background .15s}
+.cat:hover,.cat.on{background:#c02222;color:#fff}
+/* HIDDEN: "RESTRINGIDO" category barely visible */
+.cat-hidden{padding:8px 14px;color:#c03030;font-size:12px;cursor:pointer;opacity:.35;transition:all .15s}
+.cat-hidden:hover{opacity:1;color:#fff;background:#800000}
+.body{max-width:1060px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:1fr 260px;gap:20px}
+.article{border:1px solid #eee;padding:14px;margin-bottom:12px;cursor:pointer}
+.article:hover{background:#fafafa}
+.art-tag{font-size:9px;letter-spacing:2px;color:#e63333;font-weight:700;margin-bottom:5px}
+.art-title{font-size:16px;font-weight:700;color:#111;margin-bottom:6px;line-height:1.3}
+.art-meta{font-size:11px;color:#999}
+.art-desc{font-size:13px;color:#666;line-height:1.5;margin-top:6px}
+.widget{border:1px solid #eee;margin-bottom:14px}
+.w-title{background:#f5f5f5;border-bottom:1px solid #eee;padding:7px 12px;font-size:11px;font-weight:700;color:#555;text-transform:uppercase}
+.w-item{padding:8px 12px;border-bottom:1px solid #f5f5f5;font-size:12px;color:#444;cursor:pointer}
+.w-item:hover{color:#e63333}
+</style>
+</head>
+<body>
+<div class="hdr"><div class="hdr-in"><div class="logo">TECH<span>DIARIO</span></div><div class="date">Lunes, 14 de Marzo de 2024</div></div></div>
+<div class="cats"><div class="cats-in">
+  <div class="cat on">INICIO</div><div class="cat">IA</div><div class="cat">CIBERSEGURIDAD</div>
+  <div class="cat">HARDWARE</div><div class="cat">STARTUPS</div><div class="cat">CIENCIA</div>
+  <div class="cat-hidden" id="hidden-cat">RESTRINGIDO</div>
+</div></div>
+<div class="body">
+  <div>
+    <div class="article"><div class="art-tag">◈ IA</div><div class="art-title">OpenAI lanza nuevo modelo con capacidad de razonamiento avanzado</div><div class="art-meta">Por staff · hace 2h · 4,821 lecturas</div><div class="art-desc">La empresa de inteligencia artificial presentó su último modelo que supera los benchmarks anteriores en tareas de lógica y matemáticas…</div></div>
+    <div class="article"><div class="art-tag">◈ CIBERSEGURIDAD</div><div class="art-title">Vulnerabilidad crítica encontrada en protocolo ampliamente usado</div><div class="art-meta">Por redacción · hace 5h · 8,234 lecturas</div><div class="art-desc">Investigadores de seguridad revelaron un fallo que afecta a millones de dispositivos conectados a internet…</div></div>
+    <div class="article"><div class="art-tag">◈ HARDWARE</div><div class="art-title">NVIDIA presenta nueva arquitectura de GPU para centros de datos</div><div class="art-meta">Por colaborador · hace 8h · 3,102 lecturas</div></div>
+    <div class="article"><div class="art-tag">◈ STARTUPS</div><div class="art-title">Ronda de inversión de $200M para startup de computación cuántica</div><div class="art-meta">Por inversión_desk · ayer · 1,988 lecturas</div></div>
+  </div>
+  <div>
+    <div class="widget"><div class="w-title">Más leídas</div>
+      <div class="w-item">1. Fallo de seguridad expone 40M de contraseñas</div>
+      <div class="w-item">2. Apple anuncia nuevo chip M4</div>
+      <div class="w-item">3. Tesla despide 10% de su plantilla global</div>
+      <div class="w-item">4. Meta presenta gafas AR para consumidores</div>
+    </div>
+    <div class="widget"><div class="w-title">Tendencias</div>
+      <div class="w-item">#IA #Privacidad #OpenSource</div>
+      <div class="w-item">#Ciberseguridad #ZeroDay</div>
+      <div class="w-item">#Blockchain #Cripto</div>
+    </div>
+  </div>
+</div>
+<script>
+document.getElementById('hidden-cat').addEventListener('click',function(){
+  this.style.opacity='1';this.style.background='#800000';this.style.color='#fff';
+  this.textContent='Verificando…';
+  setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'neonews.onion'},'*'),600);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

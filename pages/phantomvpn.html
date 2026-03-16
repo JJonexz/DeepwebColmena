@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PhantomVPN — Zero-Log VPN</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#060810;color:#c0c8e0;min-height:100vh}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:40px 20px;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at center,#0a1030 0%,#060810 70%)}
+.hero::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(0deg,transparent,transparent 40px,
+    rgba(68,136,255,.025) 40px,rgba(68,136,255,.025) 41px),
+  repeating-linear-gradient(90deg,transparent,transparent 40px,
+    rgba(68,136,255,.025) 40px,rgba(68,136,255,.025) 41px);
+  pointer-events:none}
+.hero-icon{font-size:60px;margin-bottom:10px;filter:drop-shadow(0 0 30px rgba(68,136,255,.4));
+  transition:filter .3s}
+.hero-icon:hover{filter:drop-shadow(0 0 50px rgba(68,136,255,.7))}
+.hero-title{font-size:34px;font-weight:700;color:#fff;letter-spacing:5px;margin-bottom:10px}
+.hero-sub{font-size:13px;color:#2a4a88;letter-spacing:3px;margin-bottom:38px}
+.hero-btns{display:flex;gap:12px;justify-content:center;margin-bottom:50px}
+.hbtn{padding:12px 30px;font-family:var(--font);font-size:11px;font-weight:700;
+  letter-spacing:2px;cursor:pointer;border-radius:4px;transition:all .2s}
+.hbtn.primary{background:#4488ff;border:none;color:#fff}
+.hbtn.primary:hover{background:#3377ee;box-shadow:0 0 22px rgba(68,136,255,.3)}
+.hbtn.ghost{background:none;border:1px solid #1a3066;color:#4488ff}
+.hbtn.ghost:hover{border-color:#4488ff}
+.connected .hbtn.primary{background:#44dd66;color:#000}
+.connected .hbtn.primary:hover{background:#33cc55}
+
+.stats-row{display:flex;gap:38px;padding-top:38px;border-top:1px solid #1a2240}
+.stat{text-align:center}
+.stat-v{font-size:26px;font-weight:700;color:#4488ff}
+.stat-l{font-size:9px;color:#1a2a44;letter-spacing:2px;margin-top:3px}
+
+.conn-status{display:flex;align-items:center;gap:8px;margin-bottom:28px;
+  font-size:11px;color:#1a2a44;letter-spacing:1px}
+.status-dot{width:10px;height:10px;border-radius:50%;transition:all .3s}
+.status-dot.off{background:#333;box-shadow:none}
+.status-dot.on{background:#44dd66;box-shadow:0 0 10px #44dd66;animation:sdpulse 2s infinite}
+@keyframes sdpulse{0%,100%{box-shadow:0 0 6px #44dd66}50%{box-shadow:0 0 16px #44dd66}}
+
+.server-select{background:#0a0e1a;border:1px solid #1a2240;color:#4488ff;
+  font-family:var(--font);font-size:12px;padding:8px 14px;border-radius:4px;
+  appearance:none;cursor:pointer;width:240px;margin-bottom:8px;
+  text-align:center}
+
+/* Features */
+.features{max-width:880px;margin:0 auto;padding:55px 22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:#0a0e1a;border:1px solid #1a2240;border-radius:5px;
+  padding:22px;transition:all .2s}
+.feat:hover{border-color:#4488ff;transform:translateY(-3px);
+  box-shadow:0 4px 20px rgba(68,136,255,.06)}
+.feat-icon{font-size:26px;margin-bottom:10px}
+.feat-title{font-size:12px;font-weight:700;color:#ddd;margin-bottom:7px;letter-spacing:1px}
+.feat-desc{font-size:11px;color:#2a4a88;line-height:1.7}
+
+/* Plans */
+.plans-section{max-width:780px;margin:0 auto;padding:0 22px 55px}
+.plans-title{text-align:center;margin-bottom:30px}
+.plans-title span{font-size:9px;letter-spacing:3px;color:#1a3066;display:block;margin-bottom:10px}
+.plans-title h2{font-size:22px;font-weight:700;color:#ddd}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.plan{background:#0a0e1a;border:1px solid #1a2240;border-radius:5px;
+  padding:22px;text-align:center;transition:all .2s;cursor:pointer}
+.plan.featured{border-color:#4488ff;box-shadow:0 0 30px rgba(68,136,255,.09)}
+.plan:hover{border-color:#4488ff}
+.plan-badge{background:#4488ff;color:#fff;font-size:9px;font-weight:700;
+  letter-spacing:2px;padding:2px 9px;border-radius:10px;display:inline-block;margin-bottom:10px}
+.plan-name{font-size:15px;font-weight:700;color:#ddd;margin-bottom:5px}
+.plan-price{font-size:26px;font-weight:700;color:#4488ff}
+.plan-price small{font-size:12px;color:#1a3066}
+.plan-features{list-style:none;margin:14px 0;text-align:left}
+.plan-features li{font-size:11px;color:#2a4a88;padding:3px 0;
+  display:flex;align-items:center;gap:6px}
+.plan-features li::before{content:'✓';color:#44dd66;font-weight:700}
+.plan-btn{width:100%;padding:8px;font-family:var(--font);font-size:11px;font-weight:700;
+  letter-spacing:1px;border:1px solid #1a3066;background:none;color:#4488ff;
+  border-radius:3px;cursor:pointer;transition:all .15s}
+.plan-btn:hover,.plan.featured .plan-btn{background:#4488ff;color:#fff;border-color:#4488ff}
+
+@media(max-width:700px){
+  .features,.plans{grid-template-columns:1fr}
+  .stats-row{gap:20px;flex-wrap:wrap;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<div class="hero" id="hero">
+  <div class="hero-icon">🛡️</div>
+  <div class="hero-title">PHANTOM VPN</div>
+  <div class="hero-sub">SIN REGISTROS · GRADO MILITAR · ANÓNIMO</div>
+  <div class="conn-status">
+    <span class="status-dot off" id="sdot"></span>
+    <span id="status-txt">Desconectado</span>
+  </div>
+  <select class="server-select" id="server-sel">
+    <option>🇩🇪 Alemania — Frankfurt (Recomendado)</option>
+    <option>🇳🇱 Países Bajos — Ámsterdam</option>
+    <option>🇨🇭 Suiza — Zúrich</option>
+    <option>🇸🇪 Suecia — Estocolmo</option>
+    <option>🇮🇸 Islandia — Reikiavik</option>
+    <option>🇦🇺 Australia — Sídney</option>
+    <option>🇯🇵 Japón — Tokio</option>
+    <option>🇧🇷 Brasil — São Paulo</option>
+  </select>
+  <div class="hero-btns" id="hero-btns">
+    <button class="hbtn primary" id="conn-btn">CONECTAR AHORA</button>
+    <button class="hbtn ghost">VER PLANES</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-v">40+</div><div class="stat-l">PAÍSES</div></div>
+    <div class="stat"><div class="stat-v">2.1M</div><div class="stat-l">USUARIOS</div></div>
+    <div class="stat"><div class="stat-v">99.9%</div><div class="stat-l">UPTIME</div></div>
+    <div class="stat"><div class="stat-v">0</div><div class="stat-l">REGISTROS</div></div>
+  </div>
+</div>
+
+<div class="features">
+  ${[
+    ['🔐','Política Sin Registros','Auditado independientemente. No almacenamos registros de conexión, IPs ni datos de actividad. Cero. Ninguno. Probado en tribunal.'],
+    ['⚡','Servidores 10Gbps','Servidores de alta velocidad sin throttling de ancho de banda. Transmite, descarga y navega a velocidad completa.'],
+    ['🧅','Tor-sobre-VPN','Enruta tu tráfico a través de nuestra VPN y la red Tor simultáneamente para máximo anonimato.'],
+    ['💳','Pago Anónimo','Aceptamos XMR, BTC, ZEC y efectivo por correo. Sin tarjetas de crédito, sin PayPal, sin identidad.'],
+    ['🌐','40+ Países','Servidores en más de 40 jurisdicciones, incluyendo ubicaciones amigables con la privacidad que resisten cooperación policial.'],
+    ['🔒','Kill Switch','El kill switch automático corta tu internet si la VPN cae, previniendo fugas de IP.'],
+    ['🖥️','Multi-Dispositivo','Hasta 10 conexiones simultáneas. Compatible con Linux, Windows, macOS, Android, iOS y routers.'],
+    ['🛡️','Protección Fuga DNS','Nuestros servidores DNS aseguran que ningún proveedor externo vea tus consultas.'],
+    ['📡','Protocolo WireGuard','WireGuard moderno para velocidad + OpenVPN para compatibilidad.'],
+  ].map(([icon,title,desc])=>`
+  <div class="feat">
+    <div class="feat-icon">${icon}</div>
+    <div class="feat-title">${title}</div>
+    <div class="feat-desc">${desc}</div>
+  </div>`).join('')}
+</div>
+
+<div class="plans-section">
+  <div class="plans-title">
+    <span>◈ PLANES — PAGA ANÓNIMAMENTE CON XMR O BTC</span>
+    <h2>Elige tu nivel de privacidad</h2>
+  </div>
+  <div class="plans">
+    <div class="plan">
+      <div class="plan-name">BÁSICO</div>
+      <div class="plan-price">0.08 XMR <small>/mes</small></div>
+      <ul class="plan-features">
+        <li>1 dispositivo</li><li>10 países</li>
+        <li>Sin registros</li><li>Kill switch</li>
+      </ul>
+      <button class="plan-btn">COMENZAR</button>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">MÁS POPULAR</div>
+      <div class="plan-name">PHANTOM</div>
+      <div class="plan-price">0.22 XMR <small>/mes</small></div>
+      <ul class="plan-features">
+        <li>10 dispositivos</li><li>40+ países</li>
+        <li>Tor-sobre-VPN</li><li>Kill switch</li>
+        <li>Protección fuga DNS</li><li>IP dedicada opcional</li>
+      </ul>
+      <button class="plan-btn">COMENZAR</button>
+    </div>
+    <div class="plan">
+      <div class="plan-name">GHOST</div>
+      <div class="plan-price">0.65 XMR <small>/mes</small></div>
+      <ul class="plan-features">
+        <li>Dispositivos ilimitados</li><li>40+ países</li>
+        <li>Servidor dedicado</li><li>Todas las funciones</li>
+        <li>Soporte prioritario</li><li>Config personalizada</li>
+      </ul>
+      <button class="plan-btn">CONTACTAR</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const btn   = document.getElementById('conn-btn');
+const dot   = document.getElementById('sdot');
+const stxt  = document.getElementById('status-txt');
+const hero  = document.getElementById('hero');
+let connected = false;
+
+btn.addEventListener('click', ()=>{
+  if(!connected){
+    btn.textContent = 'Conectando…';
+    btn.disabled = true;
+    setTimeout(()=>{
+      connected = true;
+      dot.classList.replace('off','on');
+      stxt.textContent = 'Conectado — ' + document.getElementById('server-sel').value.split('—')[0].trim();
+      btn.textContent = '✔ CONECTADO';
+      btn.style.background = '#44dd66';
+      btn.style.color = '#000';
+      btn.disabled = false;
+      // Change to disconnect after 1.5s
+      setTimeout(()=>{
+        btn.textContent = 'DESCONECTAR';
+        btn.style.background = '#dd4444';
+      },1500);
+    },2000);
+  } else {
+    connected = false;
+    dot.classList.replace('on','off');
+    stxt.textContent = 'Desconectado';
+    btn.textContent = 'CONECTAR AHORA';
+    btn.style.background = '';
+    btn.style.color = '';
+  }
+});
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BlackBoard — Anonymous Job Board</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0d0d0d;color:#aaa;min-height:100vh}
+.hdr{background:#080808;border-bottom:2px solid #222;padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:15px;font-weight:700;color:#eee;letter-spacing:3px}
+.logo small{display:block;font-size:9px;color:#333;letter-spacing:1px;font-weight:400}
+.hdr-r{display:flex;gap:10px;align-items:center;font-size:11px;color:#444}
+.btn{background:#1e1e1e;border:1px solid #2a2a2a;color:#888;font-family:var(--font);
+  font-size:10px;padding:5px 12px;border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all .15s}
+.btn:hover,.btn.on{background:#2a2a2a;border-color:#444;color:#eee}
+.btn.accent{background:#eee;border-color:#eee;color:#000}
+.btn.accent:hover{background:#ccc}
+
+.filters{background:#0a0a0a;border-bottom:1px solid #181818;
+  padding:9px 20px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.f-group{display:flex;align-items:center;gap:6px}
+.f-label{font-size:9px;color:#333;letter-spacing:1px}
+.fsel{background:#0d0d0d;border:1px solid #1e1e1e;color:#666;font-family:var(--font);
+  font-size:10px;padding:4px 8px;border-radius:3px;cursor:pointer;appearance:none}
+.fsel:focus{outline:none;border-color:#444}
+.finp{background:#0d0d0d;border:1px solid #1e1e1e;color:#999;font-family:var(--font);
+  font-size:11px;padding:4px 10px;border-radius:3px;outline:none;width:190px;transition:border-color .2s}
+.finp:focus{border-color:#555}
+.post-btn{margin-left:auto;background:#eee;border:none;color:#000;font-family:var(--font);
+  font-size:10px;font-weight:700;padding:6px 14px;border-radius:3px;cursor:pointer;
+  letter-spacing:1px;transition:background .15s}
+.post-btn:hover{background:#ccc}
+
+.layout{display:flex;padding:18px 20px;gap:18px}
+.main{flex:1}
+.sidebar{width:210px;flex-shrink:0}
+
+.listing{background:#0d0d0d;border:1px solid #181818;border-radius:4px;
+  padding:14px;margin-bottom:9px;cursor:pointer;transition:all .18s}
+.listing:hover{background:#101010;border-color:#2a2a2a}
+.listing-hdr{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:7px;gap:10px}
+.listing-title{font-size:14px;color:#ddd;font-weight:700;line-height:1.3;flex:1}
+.listing-pay{font-size:14px;font-weight:700;color:#44dd66;flex-shrink:0}
+.tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:7px}
+.tag{font-size:9px;letter-spacing:1px;padding:2px 7px;border-radius:2px;font-weight:700}
+.tag-remote{background:#0a2a1a;color:#44aa66}
+.tag-anon{background:#1a1a2a;color:#6666bb}
+.tag-btc{background:#1a1000;color:#aa8800}
+.tag-skill{background:#1a1a1a;color:#666}
+.tag-hot{background:#1e0808;color:#994444}
+.listing-desc{font-size:11px;color:#444;line-height:1.6;margin-bottom:8px}
+.listing-meta{display:flex;align-items:center;gap:14px;font-size:10px;color:#2a2a2a;flex-wrap:wrap}
+.listing-meta span{display:flex;align-items:center;gap:3px}
+.bid-btn{margin-left:auto;background:#1e1e1e;border:1px solid #2a2a2a;color:#666;
+  font-family:var(--font);font-size:10px;padding:4px 10px;border-radius:3px;
+  cursor:pointer;letter-spacing:1px;transition:all .15s}
+.bid-btn:hover{border-color:#44dd66;color:#44dd66}
+
+.widget{background:#0d0d0d;border:1px solid #181818;border-radius:4px;margin-bottom:11px;overflow:hidden}
+.w-hdr{padding:7px 12px;border-bottom:1px solid #181818;
+  font-size:9px;letter-spacing:2px;color:#2a2a2a;font-weight:700}
+.w-body{padding:11px 12px}
+.cat-row{display:flex;justify-content:space-between;align-items:center;
+  padding:4px 0;border-bottom:1px solid #121212;font-size:11px;color:#444;cursor:pointer;transition:color .15s}
+.cat-row:last-child{border-bottom:none}
+.cat-row:hover{color:#aaa}
+.cat-count{background:#161616;color:#333;font-size:9px;padding:1px 6px;border-radius:8px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">BLACKBOARD<small>blackboard.onion · Bolsa de Trabajo Anónima</small></div>
+  <div class="hdr-r">
+    <span>Listados: <span style="color:#eee">2,841</span></span>
+    <button class="btn">Mis Posts</button>
+    <button class="btn accent">+ Publicar Trabajo</button>
+  </div>
+</div>
+
+<div class="filters">
+  <div class="f-group">
+    <span class="f-label">CATEGORÍA:</span>
+    <select class="fsel">
+      <option>Todas</option><option>Desarrollo</option><option>Seguridad</option>
+      <option>OSINT</option><option>Redacción</option><option>Diseño</option><option>Admin</option>
+    </select>
+  </div>
+  <div class="f-group">
+    <span class="f-label">PAGO:</span>
+    <select class="fsel">
+      <option>Cualquier Monto</option><option>0–5 XMR</option>
+      <option>5–20 XMR</option><option>20+ XMR</option>
+    </select>
+  </div>
+  <div class="f-group">
+    <span class="f-label">ORDENAR:</span>
+    <select class="fsel">
+      <option>Más Nuevos</option><option>Mayor Pago</option>
+      <option>Más Ofertas</option><option>Más Vistas</option>
+    </select>
+  </div>
+  <input class="finp" type="text" placeholder="Buscar listados…">
+  <button class="post-btn">+ PUBLICAR LISTADO</button>
+</div>
+
+<div class="layout">
+  <div class="main" id="main-listings"></div>
+  <div class="sidebar">
+    <div class="widget">
+      <div class="w-hdr">◈ CATEGORÍAS</div>
+      <div class="w-body">
+        ${[['Desarrollo','734'],['Seguridad','512'],['OSINT','298'],['Redacción','445'],
+           ['Diseño','187'],['Sys Admin','312'],['Consultoría','353']].map(([c,n])=>
+          `<div class="cat-row"><span>${c}</span><span class="cat-count">${n}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-hdr">◈ INFORMACIÓN DE PAGO</div>
+      <div class="w-body" style="font-size:11px;color:#333;line-height:2">
+        <div>Aceptado: <span style="color:#666">XMR · BTC · ZEC</span></div>
+        <div>Custodia: <span style="color:#44dd66">Disponible</span></div>
+        <div>Comisión: <span style="color:#666">3% plataforma</span></div>
+        <div>Disputas: <span style="color:#666">Resueltas por Mod</span></div>
+        <div style="margin-top:7px;font-size:10px;color:#1e1e1e;letter-spacing:.3px">
+          Todo el trabajo es anónimo. Sin info personal requerida. Usar PGP para comunicaciones.
+        </div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-hdr">◈ ESTADÍSTICAS</div>
+      <div class="w-body" style="font-size:11px;color:#333;line-height:2.1">
+        <div>Listados totales: <span style="color:#666">2,841</span></div>
+        <div>Trabajos completados: <span style="color:#44dd66">14,203</span></div>
+        <div>Usuarios activos: <span style="color:#666">8,421</span></div>
+        <div>Volumen (30d): <span style="color:#666">4,821 XMR</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const LISTINGS = [
+  {title:'Pentester Senior — Remoto', pay:'3.5 XMR/día',
+   tags:['remote','btc','skill'],
+   desc:'Buscamos operador de red team experimentado. Debe conocer: explotación de red, pruebas web, ingeniería social. Basado en resultados, pagos semanales.',
+   time:'Hace 2h', bids:8, views:234},
+  {title:'Redactor Anónimo — Temas de Seguridad', pay:'0.8 XMR/artículo',
+   tags:['remote','anon','btc'],
+   desc:'Necesitamos artículos bien escritos sobre ciberseguridad, herramientas de privacidad y OPSEC para publicación underground. 1500-3000 palabras. Pago por pieza.',
+   time:'Hace 4h', bids:14, views:512},
+  {title:'Dev Rust — Proyecto Herramienta Sigilosa', pay:'12 XMR fijo',
+   tags:['remote','skill','anon'],
+   desc:'Necesito dev Rust para herramienta de red sigilosa. Proyecto privado. Specs tras contacto PGP verificado. Sin KYC. Solo XMR.',
+   time:'Hace 6h', bids:5, views:189},
+  {title:'Investigador OSINT — Objetivo: Corporación', pay:'8 XMR',
+   tags:['remote','hot'],
+   desc:'Necesito informe OSINT detallado sobre corporación específica. Empleados, infraestructura, exposición pública. Solo investigación ética. PGP requerido.',
+   time:'Hace 8h', bids:11, views:634},
+  {title:'Dev Python — Proyecto de Scraping', pay:'2 XMR/semana',
+   tags:['remote','skill','anon'],
+   desc:'Construir y mantener scripts automatizados de recolección de datos. Debe manejar CAPTCHAs, rate limiting, rotación de proxies. Posición a largo plazo.',
+   time:'Hace 10h', bids:22, views:891},
+  {title:'UI/UX Diseñador — Marca Anónima', pay:'6 XMR total',
+   tags:['remote','anon'],
+   desc:'Diseñar logo, kit de marca e interfaz web para servicio anónimo. Tema oscuro, estética moderna. Portfolio vía recurso temporal requerido.',
+   time:'Hace 12h', bids:7, views:278},
+  {title:'Sysadmin — Mantenimiento Servidor Onion', pay:'5 XMR/mes',
+   tags:['remote','skill','hot'],
+   desc:'Administrar y mantener múltiples servidores de servicios ocultos. Debian/Ubuntu. Monitoreo de uptime, hardening, rotación de logs. Solo comunicación PGP.',
+   time:'Hace 1d', bids:9, views:445},
+  {title:'Análisis de Malware — Revisión de Muestras', pay:'1.5 XMR/muestra',
+   tags:['remote','skill','anon'],
+   desc:'Hacer ingeniería inversa de muestras proporcionadas y entregar informes detallados. Análisis estático + dinámico. Entorno sandbox disponible.',
+   time:'Hace 1d', bids:3, views:198},
+  {title:'Ghost Writer Redes Sociales — Persona Anónima', pay:'3 XMR/mes',
+   tags:['remote','anon','btc'],
+   desc:'Mantener y escribir contenido para varias cuentas anónimas en redes. Temas tech/privacidad/seguridad. Inglés fluido requerido.',
+   time:'Hace 2d', bids:18, views:723},
+  {title:'Consultor Privacidad — Cliente Corporativo', pay:'20 XMR',
+   tags:['remote','skill','hot'],
+   desc:'Evaluar y mejorar postura de privacidad para cliente corporativo anónimo. Auditoría completa, recomendaciones, soporte de implementación. Referencias vía PGP.',
+   time:'Hace 2d', bids:2, views:841},
+];
+
+document.getElementById('main-listings').innerHTML = LISTINGS.map(l=>`
+<div class="listing">
+  <div class="listing-hdr">
+    <div class="listing-title">${l.title}</div>
+    <div class="listing-pay">${l.pay}</div>
+  </div>
+  <div class="tags">
+    ${l.tags.map(t=>`<span class="tag tag-${t}">${t}</span>`).join('')}
+  </div>
+  <div class="listing-desc">${l.desc}</div>
+  <div class="listing-meta">
+    <span>🕐 ${l.time}</span>
+    <span>📨 ${l.bids} ofertas</span>
+    <span>👁 ${l.views} vistas</span>
+    <button class="bid-btn">OFERTAR →</button>
+  </div>
+</div>`).join('');
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ShadowWiki — The Hidden Encyclopedia</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#f8f4e8;color:#202020;font-family:Georgia,serif}
+a{color:#0645ad;cursor:pointer;text-decoration:none}
+a:hover{text-decoration:underline}
+
+.w-hdr{background:#fff;border-bottom:1px solid #ccc;padding:8px 0}
+.w-hdr-in{max-width:980px;margin:0 auto;padding:0 16px;
+  display:flex;align-items:center;gap:14px}
+.w-logo{font-size:20px;font-weight:700;color:#1a1a1a}
+.w-logo small{display:block;font-size:11px;color:#888;font-weight:400}
+.w-search{flex:1;display:flex;gap:0;max-width:360px;margin-left:auto}
+.w-search input{flex:1;border:1px solid #aaa;border-right:none;padding:4px 9px;
+  font-size:13px;outline:none;font-family:Arial,sans-serif}
+.w-search button{background:#36c;border:1px solid #36c;color:#fff;
+  padding:4px 12px;cursor:pointer;font-size:12px}
+
+.tabs{background:#fff;border-bottom:1px solid #a7d7f9;padding:0 16px;
+  max-width:980px;margin:0 auto;display:flex}
+.wtab{padding:4px 12px;font-size:12px;color:#0645ad;border:1px solid transparent;
+  border-bottom:none;cursor:pointer;margin-bottom:-1px;font-family:Arial,sans-serif;
+  border-bottom:1px solid #a7d7f9}
+.wtab.on{background:#f8f4e8;border:1px solid #a7d7f9;border-bottom-color:#f8f4e8;color:#202020}
+
+.w-body{max-width:980px;margin:0 auto;display:flex;padding:14px 16px;gap:0}
+.w-side{width:190px;flex-shrink:0;font-family:Arial,sans-serif;font-size:12px}
+.nav-box{border:1px solid #aaa;margin-bottom:10px;background:#f9f9f9}
+.nav-title{background:#cee0f2;padding:4px 8px;font-size:11px;font-weight:700;text-align:center}
+.nav-sec{padding:3px 8px 6px;border-top:1px solid #e0e0e0}
+.nav-sec strong{display:block;font-size:11px;color:#555;margin:4px 0 2px}
+.nav-sec a{display:block;color:#0645ad;font-size:11px;line-height:1.7}
+
+.w-art{flex:1;padding-left:18px}
+.w-art h1{font-size:24px;font-weight:400;border-bottom:1px solid #aaa;
+  padding-bottom:3px;margin-bottom:10px;color:#000}
+.w-art h2{font-size:17px;font-weight:400;border-bottom:1px solid #ddd;
+  padding-bottom:2px;margin:16px 0 7px}
+.w-art h3{font-size:14px;font-weight:700;margin:12px 0 5px}
+.w-art p{font-size:13px;line-height:1.7;margin-bottom:9px;color:#333}
+.infobox{float:right;clear:right;margin:0 0 14px 16px;border:1px solid #aaa;
+  background:#f9f9f9;font-size:12px;min-width:190px;max-width:260px}
+.ib-title{background:#cee0f2;text-align:center;font-weight:700;padding:5px 8px;font-size:13px}
+.ib-table{width:100%;border-collapse:collapse}
+.ib-table td{padding:3px 7px;border-top:1px solid #e0e0e0;vertical-align:top;font-size:11px}
+.ib-table td:first-child{font-weight:700;color:#555;width:40%}
+.toc{display:inline-block;background:#f9f9f9;border:1px solid #aaa;
+  padding:9px 14px;font-size:12px;min-width:190px;margin-bottom:14px}
+.toc-title{font-weight:700;text-align:center;margin-bottom:5px;font-family:Arial,sans-serif}
+.toc ol{padding-left:16px}
+.toc li{margin:2px 0}
+.notice{background:#ffd;border:1px solid #c8a900;padding:7px 11px;
+  margin-bottom:12px;font-size:12px;color:#333;display:flex;gap:8px}
+</style>
+</head>
+<body>
+
+<div class="w-hdr">
+  <div class="w-hdr-in">
+    <div class="w-logo">ShadowWiki<small>La Enciclopedia Oculta</small></div>
+    <div class="w-search">
+      <input type="text" id="wsearch" placeholder="Buscar en ShadowWiki…">
+      <button>Ir</button>
+    </div>
+  </div>
+</div>
+
+<div style="max-width:980px;margin:0 auto">
+  <div class="tabs">
+    <div class="wtab on">Artículo</div>
+    <div class="wtab">Discusión</div>
+    <div class="wtab">Editar</div>
+    <div class="wtab">Historial</div>
+  </div>
+</div>
+
+<div class="w-body">
+  <div class="w-side">
+    <div class="nav-box">
+      <div class="nav-title">Navegación</div>
+      <div class="nav-sec">
+        <a onclick="loadArt('home')">Portada</a>
+        <a onclick="loadArt('home')">Cambios recientes</a>
+        <a onclick="loadArt('home')">Artículo aleatorio</a>
+      </div>
+    </div>
+    <div class="nav-box">
+      <div class="nav-title">Temas</div>
+      <div class="nav-sec">
+        <strong>Seguridad</strong>
+        <a onclick="loadArt('opsec')">OPSEC</a>
+        <a onclick="loadArt('pgp')">Cifrado PGP</a>
+        <a onclick="loadArt('tor')">Red Tor</a>
+      </div>
+      <div class="nav-sec">
+        <strong>Cripto</strong>
+        <a onclick="loadArt('monero')">Monero</a>
+        <a onclick="loadArt('home')">Bitcoin</a>
+        <a onclick="loadArt('home')">ZCash</a>
+      </div>
+      <div class="nav-sec">
+        <strong>Historia</strong>
+        <a onclick="loadArt('darkweb')">Historia Dark Web</a>
+        <a onclick="loadArt('home')">Silk Road</a>
+      </div>
+    </div>
+  </div>
+  <div class="w-art" id="article"><!-- loaded by JS --></div>
+</div>
+
+<script>
+const ARTS = {
+  home:{
+    title:'ShadowWiki — La Enciclopedia Oculta',
+    content:`<div class="notice">⚠ <strong>Aviso:</strong> Todo el contenido de ShadowWiki es solo para fines educativos y de investigación. Esta es una simulación ficticia.</div>
+<p>Bienvenido a <strong>ShadowWiki</strong>, el repositorio de conocimiento de la cultura underground, ciberseguridad, herramientas de anonimato y privacidad digital.</p>
+<p>ShadowWiki contiene <strong>8,492 artículos</strong> escritos por colaboradores anónimos.</p>
+<h2>Artículos Destacados</h2>
+<p><a onclick="loadArt('tor')">Red Tor</a> — Arquitectura, modelo de amenazas y garantías de anonimato.<br>
+<a onclick="loadArt('opsec')">Seguridad Operacional (OPSEC)</a> — Guía completa de protección de identidad.<br>
+<a onclick="loadArt('pgp')">Cifrado PGP</a> — Criptografía de clave pública para comunicación segura.<br>
+<a onclick="loadArt('monero')">Monero (XMR)</a> — La criptomoneda de privacidad usada en la dark web.<br>
+<a onclick="loadArt('darkweb')">Historia de la Dark Web</a> — Desde FreeNet hasta Silk Road.</p>
+<h2>Categorías</h2>
+<p><strong>Herramientas de Anonimato</strong> · <strong>Criptografía</strong> · <strong>Seguridad de Red</strong> · <strong>Criptomonedas</strong> · <strong>OPSEC</strong> · <strong>Evasión de Censura</strong></p>`
+  },
+  tor:{
+    title:'Tor (red)',
+    ib:{Estado:'Activo',Tipo:'Red de anonimato',Protocolo:'TCP/IP',Lanzamiento:'2002',Nodos:'~6,500',País:'Internacional'},
+    content:`<div class="toc"><div class="toc-title">Contenido</div><ol><li><a>Descripción</a></li><li><a>Cómo funciona Tor</a></li><li><a>Servicios ocultos</a></li><li><a>Modelo de amenaza</a></li></ol></div>
+<p><strong>Tor</strong> (The Onion Router) es software libre para comunicación anónima que dirige el tráfico a través de una red mundial de voluntarios.</p>
+<p>Usar Tor dificulta rastrear la actividad de internet al usuario. Su uso previsto es proteger la privacidad personal y permitir comunicaciones confidenciales.</p>
+<h2>Cómo Funciona Tor</h2>
+<p>El enrutamiento cebolla cifra la capa de aplicación múltiples veces. Cada relay Tor descifra una capa y reenvía el paquete al siguiente nodo, sin conocer origen ni destino final.</p>
+<h2>Servicios Ocultos</h2>
+<p>Las direcciones <strong>.onion</strong> son un dominio de uso especial que solo puede resolverse a través de la red Tor. Los servicios ocultos no exponen la IP del servidor, haciéndolos resistentes a la censura.</p>`
+  },
+  opsec:{
+    title:'Seguridad Operacional (OPSEC)',
+    ib:{Dominio:'Seguridad informática',Abreviatura:'OPSEC',Origen:'Militar EEUU',Aplicación:'Civil, Militar'},
+    content:`<div class="toc"><div class="toc-title">Contenido</div><ol><li><a>Definición</a></li><li><a>Proceso de 5 pasos</a></li><li><a>Fallos comunes</a></li><li><a>OPSEC Digital</a></li></ol></div>
+<p><strong>OPSEC</strong> es el proceso que identifica información crítica para determinar si puede ser observada por inteligencia adversaria y ejecuta medidas para eliminar o reducir esa explotación.</p>
+<h2>Proceso de 5 Pasos</h2>
+<p><strong>1. Identificación de información crítica</strong> — Determinar qué es sensible.</p>
+<p><strong>2. Análisis de amenazas</strong> — Identificar adversarios y sus métodos.</p>
+<p><strong>3. Análisis de vulnerabilidades</strong> — Examinar cómo puede ser explotada cada vulnerabilidad.</p>
+<p><strong>4. Evaluación de riesgos</strong> — Analizar probabilidad e impacto.</p>
+<p><strong>5. Aplicación de contramedidas</strong> — Implementar medidas para eliminar vulnerabilidades.</p>
+<h2>OPSEC Digital</h2>
+<p>En contexto digital incluye el uso de <a onclick="loadArt('tor')">Tor</a>, <a onclick="loadArt('pgp')">cifrado PGP</a> y criptomonedas de privacidad como <a onclick="loadArt('monero')">Monero</a>.</p>`
+  },
+  pgp:{
+    title:'PGP (Pretty Good Privacy)',
+    ib:{Tipo:'Software de cifrado',Creador:'Phil Zimmermann',Año:'1991',Estándar:'OpenPGP (RFC 4880)',Algoritmo:'RSA, DSA, ElGamal'},
+    content:`<p><strong>Pretty Good Privacy (PGP)</strong> es un programa de cifrado que proporciona privacidad criptográfica y autenticación para comunicaciones.</p>
+<h2>Cómo Funciona PGP</h2>
+<p>PGP combina criptografía simétrica y asimétrica. El mensaje se cifra con una clave de sesión aleatoria que luego se cifra con la clave pública del destinatario.</p>
+<h2>Red de Confianza</h2>
+<p>En lugar de una autoridad certificadora central, PGP usa un modelo de "<strong>red de confianza</strong>" donde los usuarios firman las claves entre sí para voucher su autenticidad.</p>`
+  },
+  monero:{
+    title:'Monero (XMR)',
+    ib:{Tipo:'Criptomoneda',Símbolo:'XMR',Fundado:'2014',Algoritmo:'RandomX (PoW)',Privacidad:'Ring Sigs, RingCT, Stealth'},
+    content:`<p><strong>Monero</strong> (<em>XMR</em>) es una criptomoneda de privacidad descentralizada que usa tecnologías para ofuscar transacciones y lograr anonimato.</p>
+<h2>Características de Privacidad</h2>
+<p><strong>Ring Signatures</strong> — Ocultan al remitente mezclando entradas de transacción con otras del blockchain.</p>
+<p><strong>RingCT</strong> — Oculta los montos de las transacciones usando compromisos de Pedersen.</p>
+<p><strong>Stealth Addresses</strong> — Generan direcciones de un solo uso por transacción, impidiendo vincular pagos.</p>
+<h2>Uso en la Economía Underground</h2>
+<p>Monero reemplazó a Bitcoin en la mayoría de los mercados darknet por sus superiores propiedades de privacidad frente a blockchains transparentes.</p>`
+  },
+  darkweb:{
+    title:'Historia de la Dark Web',
+    ib:{Origen:'~1990s',Notable:'Silk Road, AlphaBay, Hansa',Tecnología:'Tor, I2P, Freenet',Estado:'Activo y evolucionando'},
+    content:`<p>La <strong>dark web</strong> es la parte de la World Wide Web solo accesible mediante software especial, permitiendo que usuarios y operadores permanezcan anónimos.</p>
+<h2>Orígenes</h2>
+<p><strong>Freenet</strong>, lanzado en 2000, fue una de las primeras herramientas para comunicación resistente a la censura. La <a onclick="loadArt('tor')">red Tor</a>, desarrollada por DARPA, se convirtió en la plataforma dominante desde 2004.</p>
+<h2>Era Silk Road (2011–2013)</h2>
+<p>El lanzamiento de Silk Road por "Dread Pirate Roberts" (Ross Ulbricht) marcó un punto de inflexión. Demostró que los mercados anónimos podían operar a escala usando Bitcoin y Tor. En su punto máximo manejaba millones de dólares mensuales.</p>
+<h2>Era Moderna</h2>
+<p>Tras múltiples tomas por fuerzas del orden, el ecosistema se ha vuelto más descentralizado. Los mercados modernos usan <a onclick="loadArt('monero')">Monero</a>, custodia multifirma y hosting distribuido para resistir cierres.</p>`
+  }
+};
+
+function loadArt(key){
+  const art = ARTS[key] || ARTS.home;
+  const ib = art.ib ? `<div class="infobox">
+    <div class="ib-title">${art.title}</div>
+    <table class="ib-table">
+      ${Object.entries(art.ib).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+    </table></div>` : '';
+  document.getElementById('article').innerHTML = `<h1>${art.title}</h1>${ib}${art.content}`;
+}
+
+loadArt('home');
+document.getElementById('wsearch').addEventListener('keydown', e => {
+  if(e.key==='Enter') {
+    const q = e.target.value.trim().toLowerCase();
+    const keys = Object.keys(ARTS);
+    const match = keys.find(k => k.includes(q) || ARTS[k].title.toLowerCase().includes(q));
+    if(match) loadArt(match); else loadArt('home');
+  }
+});
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

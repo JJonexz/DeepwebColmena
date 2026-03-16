@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CorreoLite — Correo Seguro Gratuito</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f4f7fc;font-family:Arial,sans-serif;color:#333;display:flex;flex-direction:column;min-height:100vh}
+.hdr{background:#1a73e8;color:#fff;padding:12px 24px;display:flex;align-items:center;gap:14px}
+.logo{font-size:20px;font-weight:700;letter-spacing:.5px}
+.nav{display:flex;gap:16px;font-size:13px;margin-left:auto}
+.nav a{color:#cce3ff;text-decoration:none}
+.nav a:hover{color:#fff}
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
+.box{background:#fff;border:1px solid #ddd;border-radius:8px;padding:36px;max-width:380px;width:100%;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.box h2{font-size:20px;color:#1a73e8;margin-bottom:6px;text-align:center}
+.box p{font-size:12px;color:#888;text-align:center;margin-bottom:22px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:12px;color:#555;margin-bottom:4px}
+.field input{width:100%;border:1px solid #ccc;padding:9px 12px;border-radius:4px;font-size:13px;outline:none}
+.field input:focus{border-color:#1a73e8}
+.login-btn{width:100%;background:#1a73e8;color:#fff;border:none;padding:11px;border-radius:4px;font-size:14px;cursor:pointer;margin-bottom:12px;transition:background .15s}
+.login-btn:hover{background:#1557b0}
+.sep{text-align:center;font-size:12px;color:#aaa;margin-bottom:12px;position:relative}
+.sep::before,.sep::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:#e0e0e0}
+.sep::before{left:0}.sep::after{right:0}
+.reg-btn{width:100%;background:#fff;color:#1a73e8;border:1px solid #1a73e8;padding:10px;border-radius:4px;font-size:13px;cursor:pointer;transition:all .15s}
+.reg-btn:hover{background:#f0f5ff}
+footer{background:#f8f9fa;border-top:1px solid #e0e0e0;padding:12px 24px;text-align:center;font-size:11px;color:#999}
+/* HIDDEN: the lock icon in header — clicking it 3x reveals access */
+#lock-icon{cursor:pointer;font-size:18px;transition:transform .2s;user-select:none}
+#lock-icon:hover{transform:scale(1.15)}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">✉ CorreoLite</div>
+  <div class="nav"><a>Características</a><a>Precios</a><a>Ayuda</a></div>
+  <span id="lock-icon" title="Seguridad">🔒</span>
+</div>
+<div class="main">
+  <div class="box">
+    <h2>Iniciar sesión</h2>
+    <p>Accede a tu correo seguro con cifrado de extremo a extremo</p>
+    <div class="field"><label>Correo electrónico</label><input type="email" placeholder="usuario@correolite.com"></div>
+    <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+    <button class="login-btn">Iniciar sesión</button>
+    <div class="sep">o</div>
+    <button class="reg-btn">Crear cuenta gratuita</button>
+  </div>
+</div>
+<footer>© 2024 CorreoLite · Cifrado AES-256 · Sin registros · <a style="color:#1a73e8;text-decoration:none">Términos</a> · <a style="color:#1a73e8;text-decoration:none">Privacidad</a></footer>
+<script>
+let n=0;
+document.getElementById('lock-icon').addEventListener('click',function(){
+  n++;
+  if(n===1)this.textContent='🔓';
+  if(n===2)this.textContent='⚿';
+  if(n>=3){this.textContent='🔑';setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'mailnode.onion'},'*'),500);}
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

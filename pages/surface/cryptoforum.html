@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ElHuerto.net — Foro de Jardinería</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f0e8;color:#333;font-family:Verdana,sans-serif;font-size:13px}
+header{background:#4a7c3f;color:#fff;padding:10px 0}
+.hdr-in{max-width:920px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700}
+.logo span{color:#c8e6c9}
+.hdr-right{font-size:12px;color:#c8e6c9}
+.hdr-right a{color:#c8e6c9;text-decoration:none;margin-left:10px}
+.body{max-width:920px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:1fr 220px;gap:16px}
+.board{background:#fff;border:1px solid #ccc;margin-bottom:12px}
+.board-hdr{background:#4a7c3f;color:#fff;padding:7px 12px;font-size:13px;font-weight:700}
+.thread{display:grid;grid-template-columns:1fr 60px 60px;padding:8px 12px;border-bottom:1px solid #eee;cursor:pointer;transition:background .1s}
+.thread:hover{background:#f9f9f5}
+.thread:last-child{border-bottom:none}
+.t-title{color:#3a6a3a;font-size:12px}
+.t-meta{font-size:11px;color:#999;margin-top:2px}
+.t-num{font-size:11px;color:#888;text-align:center}
+.sidebar{font-size:12px}
+.widget{background:#fff;border:1px solid #ccc;margin-bottom:12px}
+.w-title{background:#5a8a50;color:#fff;padding:6px 10px;font-size:11px;font-weight:700;text-transform:uppercase}
+.w-body{padding:10px}
+.w-body a{display:block;color:#3a6a3a;text-decoration:none;padding:3px 0;border-bottom:1px solid #f0f0e8;font-size:12px}
+.w-body a:hover{color:#1a4a1a}
+/* HIDDEN: "Sección privada" looks like a normal widget link but slightly lighter */
+#priv-link{color:#b0b8b0 !important;font-style:italic}
+#priv-link:hover{color:#3a6a3a !important}
+footer{background:#4a7c3f;color:#c8e6c9;padding:10px;text-align:center;font-size:11px;margin-top:24px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hdr-in">
+    <div class="logo">🌿 El<span>Huerto</span>.net</div>
+    <div class="hdr-right">
+      Bienvenido, <strong>visitante</strong>
+      <a>Registrarse</a><a>Iniciar sesión</a>
+    </div>
+  </div>
+</header>
+
+<div class="body">
+  <div>
+    <div class="board">
+      <div class="board-hdr">🌱 CULTIVO EN INTERIOR</div>
+      <div class="thread"><div><div class="t-title">Mejores sustratos para tomates en maceta 2024</div><div class="t-meta">por verdejuanito · hace 2h</div></div><div class="t-num">47</div><div class="t-num">832</div></div>
+      <div class="thread"><div><div class="t-title">LED vs HPS: comparativa definitiva de iluminación</div><div class="t-meta">por luzplantera · hace 5h</div></div><div class="t-num">89</div><div class="t-num">2.1K</div></div>
+      <div class="thread"><div><div class="t-title">Control de humedad en grow tent — guía</div><div class="t-meta">por hidroponiaco · ayer</div></div><div class="t-num">23</div><div class="t-num">541</div></div>
+    </div>
+    <div class="board">
+      <div class="board-hdr">🌿 HIERBAS AROMÁTICAS</div>
+      <div class="thread"><div><div class="t-title">Cultivo de albahaca todo el año — tips y trucos</div><div class="t-meta">por cocinero_verde · hace 3h</div></div><div class="t-num">31</div><div class="t-num">678</div></div>
+      <div class="thread"><div><div class="t-title">¿Por qué se seca mi lavanda? Diagnóstico</div><div class="t-meta">por flordelcampo · hace 1d</div></div><div class="t-num">15</div><div class="t-num">289</div></div>
+      <div class="thread"><div><div class="t-title">Romero vs tomillo: cuál crece mejor en interior</div><div class="t-meta">por aromaster · hace 2d</div></div><div class="t-num">8</div><div class="t-num">122</div></div>
+    </div>
+    <div class="board">
+      <div class="board-hdr">🌍 PERMACULTURA Y HUERTA</div>
+      <div class="thread"><div><div class="t-title">Diseño de huerta familiar en 10m² — planos</div><div class="t-meta">por permacultor · hace 6h</div></div><div class="t-num">56</div><div class="t-num">1.4K</div></div>
+      <div class="thread"><div><div class="t-title">Compostaje acelerado: resultados en 3 semanas</div><div class="t-meta">por terranoverde · ayer</div></div><div class="t-num">44</div><div class="t-num">987</div></div>
+    </div>
+  </div>
+  <div class="sidebar">
+    <div class="widget">
+      <div class="w-title">Categorías</div>
+      <div class="w-body">
+        <a>Cultivo interior</a>
+        <a>Huerta exterior</a>
+        <a>Hidroponía</a>
+        <a>Flores ornamentales</a>
+        <a>Árboles frutales</a>
+        <!-- HIDDEN TRIGGER: barely visible, looks like a normal category -->
+        <a id="priv-link" href="#">Sección privada…</a>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="w-title">Estadísticas</div>
+      <div class="w-body" style="color:#666;line-height:2">
+        Posts: <strong>48,291</strong><br>
+        Miembros: <strong>12,045</strong><br>
+        En línea: <strong>234</strong>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>ElHuerto.net — Comunidad de jardinería desde 2010 · <a style="color:#c8e6c9">Reglas</a> · <a style="color:#c8e6c9">Contacto</a></footer>
+
+<script>
+document.getElementById('priv-link').addEventListener('click', function(e){
+  e.preventDefault();
+  this.textContent = 'Verificando acceso…';
+  this.style.color = '#3a6a3a';
+  setTimeout(()=> window.parent.postMessage({action:'surfacePassed',url:'cryptoforum.onion'},'*'), 700);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

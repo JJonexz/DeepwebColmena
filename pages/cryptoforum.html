@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CryptoForum — Underground Discussion</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0e0e0e;color:#c8c8c8;font-family:'Courier Prime','Courier New',monospace}
+a{cursor:pointer;color:#cc0000;text-decoration:none}
+a:hover{text-decoration:underline}
+
+.hdr{background:#0a0a0a;border-bottom:3px solid #8b0000;padding:8px 0}
+.hdr-in{max-width:940px;margin:0 auto;padding:0 16px;
+  display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:700;color:#cc0000;letter-spacing:1px}
+.logo small{display:block;font-size:10px;color:#444;font-weight:400}
+.hdr-links{display:flex;gap:14px;font-size:12px}
+.hdr-links a{color:#666}
+.hdr-links a:hover{color:#cc0000}
+.usr{font-size:11px;color:#555}
+.usr span{color:#cc0000}
+
+.breadcrumb{background:#111;border-bottom:1px solid #1c1c1c;padding:5px 0;font-size:11px;color:#444}
+.breadcrumb-in{max-width:940px;margin:0 auto;padding:0 16px}
+
+.body{max-width:940px;margin:0 auto;padding:14px 16px}
+.statsbar{background:#0a0a0a;border:1px solid #1a1a1a;padding:7px 12px;margin-bottom:16px;
+  display:flex;gap:18px;font-size:11px;color:#444}
+.statsbar span{color:#777}
+
+.board{background:#0d0d0d;border:1px solid #1c1c1c;margin-bottom:18px}
+.board-hdr{background:#8b0000;padding:7px 12px;font-size:13px;font-weight:700;
+  color:#fff;letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.col-hdr{display:grid;grid-template-columns:1fr 70px 70px 130px;padding:5px 12px;
+  background:#0a0a0a;font-size:9px;color:#333;letter-spacing:1px;font-weight:700;
+  border-bottom:1px solid #1c1c1c}
+.col-hdr span:not(:first-child){text-align:center}
+.col-hdr span:last-child{text-align:right}
+.row{display:grid;grid-template-columns:1fr 70px 70px 130px;padding:9px 12px;
+  border-bottom:1px solid #161616;align-items:center;transition:background .15s;cursor:pointer}
+.row:hover{background:#121212}
+.row:last-child{border-bottom:none}
+.thread-title{font-size:12px;color:#bbb}
+.thread-title strong{color:#ddd}
+.tag{display:inline-block;padding:1px 5px;border-radius:2px;font-size:9px;
+  font-weight:700;margin-right:4px;vertical-align:middle}
+.tag-hot{background:#8b0000;color:#ff8888}
+.tag-sticky{background:#2a2a00;color:#aaaa00}
+.tag-new{background:#002a1a;color:#00aa66}
+.tag-anon{background:#1a1a2a;color:#6666bb}
+.tmeta{font-size:10px;color:#444;margin-top:2px}
+.cnum{font-size:11px;color:#444;text-align:center}
+.clast{font-size:10px;color:#333;text-align:right}
+.clast span{display:block;color:#555}
+
+.footer{text-align:center;font-size:10px;color:#2a2a2a;padding:14px;
+  border-top:1px solid #1a1a1a;margin-top:16px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="logo">CryptoForum<small>Underground Discussion Since 2016</small></div>
+    <div class="hdr-links">
+      <a>Inicio</a><a>Reglas</a><a>Claves PGP</a><a>IRC</a><a>Registro</a>
+    </div>
+    <div class="usr">Sesión: <span>anon_7f4a2c</span></div>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <div class="breadcrumb-in">
+    <a onclick="window.parent.postMessage({action:'navigate',url:'cryptoforum.onion'},'*')">CryptoForum</a> › Índice
+  </div>
+</div>
+
+<div class="body">
+  <div class="statsbar">
+    <span>Posts totales: <span>1,284,392</span></span>
+    <span>Hilos: <span>48,291</span></span>
+    <span>Miembros: <span>84,201</span></span>
+    <span>En línea: <span style="color:#44dd66">847</span></span>
+    <span>Visitantes: <span>2,341</span></span>
+  </div>
+
+  <div id="boards"></div>
+
+  <div class="footer">
+    CryptoForum — Desde 2016 · Sin Registros · Cifrado PGP ·
+    <span style="color:#8b0000">Solo Tor</span>
+  </div>
+</div>
+
+<script>
+const BOARDS = [
+  { name:'⚡ DISCUSIÓN GENERAL', threads:[
+    {tag:'hot',    title:'Mejores prácticas de OPSEC en 2024 — Megahilo',       author:'anon_prime',    r:847,  v:'12.4K',t:'2h',   b:'CryptoGhost'},
+    {tag:'sticky', title:'[LEER PRIMERO] Reglas del foro y guía de PGP',       author:'Admin_X',       r:234,  v:'89.3K',t:'3d',   b:'Admin_X'},
+    {tag:'new',    title:'Por qué Signal está comprometido y qué alternativas existen',author:'_null_ptr',r:56,v:'2.1K',t:'14m',  b:'voidwalker'},
+    {tag:'anon',   title:'Ética de la investigación de seguridad grey-hat',     author:'Anonymous',     r:123,  v:'4.8K',t:'1h',   b:'Anonymous'},
+    {tag:'',       title:'VPN vs TOR vs I2P — Comparación real 2024',          author:'netghost',      r:312,  v:'7.9K',t:'5h',   b:'phantom_net'},
+  ]},
+  { name:'🔐 SEGURIDAD Y HACKING', threads:[
+    {tag:'hot',    title:'Zero-day encontrado en OpenSSH 9.x — PoC disponible',author:'sec_researcher',r:412,  v:'18.2K',t:'45m',  b:'0xdeadbeef'},
+    {tag:'new',    title:'Ingeniería inversa de troyanos bancarios Android',    author:'MalwareGuru',   r:88,   v:'3.3K',t:'2h',   b:'binex'},
+    {tag:'',       title:'SQL injection en 2024 — ¿Sigue siendo relevante?',   author:'sqlninja',      r:201,  v:'5.6K',t:'1d',   b:'d4rk_h4cker'},
+    {tag:'anon',   title:'Evasión de soluciones EDR en 2024 — técnicas',       author:'Anonymous',     r:290,  v:'9.8K',t:'30m',  b:'Anonymous'},
+  ]},
+  { name:'💰 CRIPTOMONEDAS', threads:[
+    {tag:'hot',    title:'Monero vs ZCash — ¿Cuál es realmente privado?',      author:'crypto_monk',   r:534,  v:'14.1K',t:'1h',   b:'xmr_maxi'},
+    {tag:'new',    title:'Técnicas para evadir análisis de cadena — 2024',     author:'chainbreaker',  r:67,   v:'2.4K',t:'20m',  b:'chainbreaker'},
+    {tag:'',       title:'Mejores mixers operando — lista verificada',         author:'tumbler_pro',   r:445,  v:'11.2K',t:'2d',  b:'mixmaster'},
+    {tag:'',       title:'Comercio P2P sin KYC — guía completa',              author:'nokycpls',      r:189,  v:'6.7K',t:'6h',   b:'fiat_is_dead'},
+  ]},
+  { name:'🌐 REDES Y ANONIMATO', threads:[
+    {tag:'sticky', title:'Guía definitiva de navegación anónima — Ed. 2024',   author:'Admin_X',       r:1203, v:'44.8K',t:'1w',   b:'Admin_X'},
+    {tag:'hot',    title:'Los servicios ocultos de I2P están creciendo',       author:'i2p_advocate',  r:234,  v:'7.3K',t:'3h',   b:'garlic_boy'},
+    {tag:'new',    title:'Freenet vs ZeroNet — pros y contras',               author:'decentral_net', r:45,   v:'1.8K',t:'1h',   b:'netfreedom'},
+  ]},
+];
+
+const boards = document.getElementById('boards');
+BOARDS.forEach(b => {
+  boards.innerHTML += `
+  <div class="board">
+    <div class="board-hdr">${b.name}</div>
+    <div class="col-hdr">
+      <span>HILO</span><span>RESP.</span><span>VISTAS</span><span>ÚLTIMO POST</span>
+    </div>
+    ${b.threads.map(t => `
+    <div class="row">
+      <div>
+        ${t.tag?`<span class="tag tag-${t.tag}">${t.tag.toUpperCase()}</span>`:''}
+        <span class="thread-title"><strong>${t.title}</strong></span>
+        <div class="tmeta">por ${t.author}</div>
+      </div>
+      <div class="cnum">${t.r}</div>
+      <div class="cnum">${t.v}</div>
+      <div class="clast">${t.t} atrás<span>${t.b}</span></div>
+    </div>`).join('')}
+  </div>`;
+});
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NubeSegura — Almacenamiento en la nube</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0f23;color:#e0e0e0;font-family:Arial,sans-serif}
+.hdr{background:#1a1a3e;border-bottom:1px solid #2a2a5a;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700;color:#6699ff}
+.logo span{color:#99ccff}
+.nav a{color:#8899bb;text-decoration:none;margin-left:16px;font-size:13px}
+.nav a:hover{color:#6699ff}
+.hero{text-align:center;padding:60px 20px 50px;background:linear-gradient(180deg,#1a1a3e,#0f0f23)}
+.hero h1{font-size:32px;font-weight:700;color:#fff;margin-bottom:12px}
+.hero p{font-size:15px;color:#8899bb;margin-bottom:30px}
+.hero-btns{display:flex;gap:12px;justify-content:center}
+.btn-p{background:#4466cc;color:#fff;border:none;padding:12px 28px;border-radius:6px;font-size:14px;cursor:pointer}
+.btn-s{background:none;border:1px solid #4466cc;color:#6699ff;padding:12px 28px;border-radius:6px;font-size:14px;cursor:pointer}
+.plans{display:flex;gap:16px;max-width:800px;margin:0 auto;padding:40px 20px;justify-content:center}
+.plan{background:#1a1a3e;border:1px solid #2a2a5a;border-radius:8px;padding:24px;width:220px;text-align:center}
+.plan.featured{border-color:#4466cc}
+.plan-name{font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
+.plan-price{font-size:28px;font-weight:700;color:#6699ff;margin-bottom:14px}
+.plan-price small{font-size:12px;color:#556677}
+.plan ul{list-style:none;font-size:12px;color:#8899bb;text-align:left;line-height:2.2}
+.plan ul li::before{content:'✓ ';color:#4466cc}
+footer{text-align:center;padding:20px;font-size:11px;color:#445566;border-top:1px solid #1a1a3e}
+/* HIDDEN: tiny version badge that acts as trigger */
+#ver-badge{display:inline-block;background:#1a1a3e;border:1px solid #2a2a5a;color:#334466;font-size:10px;padding:2px 8px;border-radius:10px;cursor:pointer;transition:all .2s;margin-left:8px}
+#ver-badge:hover{border-color:#4466cc;color:#6699ff}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">☁ Nube<span>Segura</span> <span id="ver-badge">v2.0</span></div>
+  <nav class="nav"><a>Inicio</a><a>Planes</a><a>API</a><a>Empresa</a><a>Acceder</a></nav>
+</div>
+<div class="hero">
+  <h1>Almacena. Comparte. Seguro.</h1>
+  <p>Hasta 50 GB gratis con cifrado AES-256. Sin publicidad, sin límites ocultos.</p>
+  <div class="hero-btns">
+    <button class="btn-p">Empezar gratis</button>
+    <button class="btn-s">Ver planes</button>
+  </div>
+</div>
+<div class="plans">
+  <div class="plan"><div class="plan-name">GRATIS</div><div class="plan-price">$0 <small>/mes</small></div><ul><li>50 GB almacenamiento</li><li>Cifrado AES-256</li><li>2 dispositivos</li><li>Soporte por email</li></ul></div>
+  <div class="plan featured"><div class="plan-name">PRO</div><div class="plan-price">$9 <small>/mes</small></div><ul><li>2 TB almacenamiento</li><li>Cifrado E2E</li><li>Dispositivos ilimitados</li><li>Soporte 24/7</li></ul></div>
+  <div class="plan"><div class="plan-name">EMPRESA</div><div class="plan-price">$29 <small>/mes</small></div><ul><li>10 TB almacenamiento</li><li>API acceso completo</li><li>SSO y LDAP</li><li>Compliance certif.</li></ul></div>
+</div>
+<footer>© 2024 NubeSegura Inc. · Servidores en Suiza · ISO 27001</footer>
+<script>
+document.getElementById('ver-badge').addEventListener('click',function(){
+  this.textContent='Cargando…';this.style.borderColor='#4466cc';this.style.color='#6699ff';
+  setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'datavault.onion'},'*'),600);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

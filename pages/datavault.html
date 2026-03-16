@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DataVault — Encrypted File Repository</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0a0f0a;color:#8ab08a;min-height:100vh}
+.hdr{background:#060a06;border-bottom:1px solid #1a2a1a;padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:15px;font-weight:700;color:#44dd66;letter-spacing:3px}
+.logo small{display:block;font-size:9px;color:#2a4a2a;letter-spacing:1px;font-weight:400}
+.hdr-r{display:flex;gap:10px;align-items:center;font-size:10px;color:#2a4a2a}
+.btn{background:none;border:1px solid #1a4a1a;color:#44dd66;font-family:var(--font);
+  font-size:10px;padding:4px 11px;border-radius:3px;cursor:pointer;letter-spacing:1px;transition:all .15s}
+.btn:hover{background:#44dd66;color:#000}
+.toolbar{background:#080c08;border-bottom:1px solid #152015;padding:7px 20px;
+  display:flex;gap:8px;align-items:center}
+.path{flex:1;background:#0a0f0a;border:1px solid #1a2a1a;color:#44dd66;
+  font-family:var(--font);font-size:11px;padding:4px 11px;border-radius:3px;
+  letter-spacing:.4px;display:flex;align-items:center;gap:5px}
+.path span{color:#2a6a2a;cursor:pointer}
+.path span:hover{color:#44dd66}
+.layout{display:flex}
+.tree{width:200px;flex-shrink:0;background:#080d08;border-right:1px solid #152015;
+  padding:10px 0;min-height:calc(100vh - 120px)}
+.tree-sec{font-size:8px;letter-spacing:2px;color:#1a4a1a;padding:7px 14px 3px;font-weight:700}
+.tree-item{padding:5px 14px;font-size:11px;cursor:pointer;color:#2a5a2a;
+  display:flex;align-items:center;gap:5px;transition:all .15s}
+.tree-item:hover{background:#0c140c;color:#44dd66}
+.tree-item.on{background:#0e160e;color:#44dd66}
+.main-area{flex:1;padding:14px 20px}
+.section-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.section-title{font-size:10px;letter-spacing:2px;color:#2a6a2a;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.file{background:#0c140c;border:1px solid #1a2a1a;border-radius:3px;padding:12px;
+  cursor:pointer;transition:all .18s;text-align:center}
+.file:hover{border-color:#44dd66;background:#0f1a0f;box-shadow:0 0 10px rgba(68,221,102,.05)}
+.file.locked{border-color:#3a1010}
+.file-icon{font-size:28px;margin-bottom:6px}
+.file-name{font-size:10px;color:#5a8a5a;word-break:break-all;line-height:1.3;margin-bottom:3px}
+.file-meta{font-size:9px;color:#1a4a1a}
+.badge{background:#200;color:#f55;font-size:7px;letter-spacing:2px;padding:1px 4px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">DATAVAULT<small>datavault.onion · Repositorio Cifrado de Archivos</small></div>
+  <div class="hdr-r">
+    Conectado como: <span style="color:#44dd66">anonymous_drop</span>
+    <button class="btn">Subir Archivo</button>
+    <button class="btn">Verificar PGP</button>
+  </div>
+</div>
+<div class="toolbar">
+  <div class="path" id="curr-path"><span>raiz</span></div>
+  <button class="btn" style="font-size:10px">↓ Descargar Todo</button>
+  <button class="btn" style="font-size:10px">🔍 Buscar</button>
+</div>
+<div class="layout">
+  <div class="tree">
+    <div class="tree-sec">SISTEMA DE ARCHIVOS</div>
+    <div class="tree-item on" onclick="loadDir('root')">📂 / raiz</div>
+    <div class="tree-item" onclick="loadDir('leaks')">📁 /FILTRACIONES_2024</div>
+    <div class="tree-item" onclick="loadDir('classified')">📁 /CLASIFICADO</div>
+    <div class="tree-item" onclick="loadDir('tools')">📁 /HERRAMIENTAS</div>
+    <div class="tree-item" onclick="loadDir('archive')">📁 /ARCHIVO</div>
+  </div>
+  <div class="main-area">
+    <div class="section-hdr">
+      <div class="section-title" id="dir-title">◈ RAIZ</div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+<script>
+const DIRS = {
+  root:[
+    {icon:"📁",name:"FILTRACIONES_2024",size:"—",meta:"2024-03-12",locked:false,dir:"leaks"},
+    {icon:"📁",name:"CLASIFICADO",size:"—",meta:"TOP SECRET",locked:true,dir:"classified"},
+    {icon:"📁",name:"HERRAMIENTAS",size:"—",meta:"2024-02-28",locked:false,dir:"tools"},
+    {icon:"📁",name:"ARCHIVO",size:"—",meta:"2024-01-15",locked:false,dir:"archive"},
+    {icon:"📄",name:"LEEME.txt",size:"4.2 KB",meta:"2024-03-01",locked:false},
+    {icon:"🔑",name:"INDEX.pgp",size:"12.8 KB",meta:"2024-03-14",locked:false},
+  ],
+  leaks:[
+    {icon:"📦",name:"correos_corporativos_2024_Q1.7z",size:"847 MB",meta:"2024-03-12",locked:false},
+    {icon:"📊",name:"base_datos_gov_US.csv",size:"2.4 GB",meta:"2024-03-10",locked:false},
+    {icon:"💳",name:"credenciales_bancarias_EUR_v3.txt",size:"156 MB",meta:"2024-03-08",locked:true},
+    {icon:"🏥",name:"registros_medicos_muestra.json",size:"389 MB",meta:"2024-03-05",locked:true},
+    {icon:"💻",name:"codigo_fuente_REDACTADO.tar.gz",size:"1.2 GB",meta:"2024-02-28",locked:false},
+    {icon:"📋",name:"empleados_MEGACORP_2024.xlsx",size:"44 MB",meta:"2024-02-20",locked:false},
+  ],
+  classified:[
+    {icon:"🔒",name:"[REDACTADO]_memo_interno_2024.pdf",size:"8.4 MB",meta:"2024-03-11",locked:true},
+    {icon:"🔒",name:"PROYECTO_NOCHE_resumen.docx",size:"2.1 MB",meta:"2024-03-09",locked:true},
+    {icon:"🔒",name:"INFORME_INTEL_Q1_2024.pdf",size:"18.7 MB",meta:"2024-03-07",locked:true},
+    {icon:"🔒",name:"INTERCEPTADOS_SIGINT_muestra.txt",size:"672 KB",meta:"2024-02-15",locked:true},
+  ],
+  tools:[
+    {icon:"🛠️",name:"phantom_rat_v4.2.exe",size:"2.8 MB",meta:"2024-03-13",locked:false},
+    {icon:"🐍",name:"scanner_red_sigiloso.py",size:"48 KB",meta:"2024-03-01",locked:false},
+    {icon:"📜",name:"tor_bridge_finder.sh",size:"12 KB",meta:"2024-02-14",locked:false},
+    {icon:"📝",name:"lista_palabras_2024.txt",size:"4.2 GB",meta:"2024-01-30",locked:false},
+    {icon:"💥",name:"pack_exploits_CVE_2024.zip",size:"156 MB",meta:"2024-03-08",locked:true},
+  ],
+  archive:[
+    {icon:"📦",name:"dump_2023.tar.gz",size:"12 GB",meta:"2024-01-01",locked:false},
+    {icon:"📦",name:"credenciales_2022.7z",size:"3.4 GB",meta:"2023-01-01",locked:true},
+    {icon:"📦",name:"dumps_historicos_2019-2021.tar",size:"28 GB",meta:"2022-01-01",locked:false},
+  ]
+};
+
+const TITLES = {root:"RAIZ",leaks:"FILTRACIONES_2024",classified:"CLASIFICADO",tools:"HERRAMIENTAS",archive:"ARCHIVO"};
+
+function loadDir(key){
+  document.querySelectorAll(".tree-item").forEach(t=>t.classList.remove("on"));
+  const files = DIRS[key];
+  document.getElementById("dir-title").textContent = "◈ " + (TITLES[key]||key);
+  document.getElementById("curr-path").innerHTML = key==="root"?"<span>raiz</span>":"<span onclick=\"loadDir(\'root\')\">raiz</span> / <span>"+TITLES[key]+"</span>";
+  const grid = document.getElementById("grid");
+  grid.innerHTML = files.map(f=>`
+  <div class="file ${f.locked?"locked":""}" ondblclick="${f.dir?`loadDir(\'${f.dir}\')`:``}">
+    <div class="file-icon">${f.icon}</div>
+    <div class="file-name">${f.name}</div>
+    <div class="file-meta">${f.locked?'<span class="badge">BLOQUEADO</span>':f.size}<div style="font-size:8px;color:#1a3a1a;margin-top:2px">${f.meta}</div></div>
+  </div>`).join("");
+}
+loadDir("root");
+
+// Fake download for files in datavault
+document.querySelectorAll('.vlt-file:not(.locked)').forEach(function(file) {
+  file.addEventListener('click', function() {
+    var name = file.querySelector('.file-name');
+    if(!name) return;
+    var fname = name.textContent.trim();
+    if(fname.endsWith('.txt') || fname.endsWith('.exe') || fname.endsWith('.zip') || fname.endsWith('.7z') || fname.endsWith('.tar') || fname.endsWith('.csv') || fname.endsWith('.json') || fname.endsWith('.xlsx') || fname.endsWith('.py') || fname.endsWith('.sh')) {
+      var content = 'ARCHIVO SIMULADO EDUCATIVO\n\nNombre: ' + fname + '\nFuente: datavault.onion\n\nContenido: [DATOS FICTICIOS - NINGUNA INFORMACIÓN REAL]\n\nEste archivo es parte de la simulación educativa\nProyecto La Colmena - Julian Alexis Rios';
+      window.parent.postMessage({action:'fakeDownload', file:{name:fname, content:content}}, '*');
+    }
+  });
+});
+
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

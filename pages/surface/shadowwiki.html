@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>RecetarioUniversal — Wiki de Cocina</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f8f5f0;color:#333;font-family:Georgia,serif}
+.hdr{background:#8b1a1a;color:#fff;padding:8px 0}
+.hdr-in{max-width:980px;margin:0 auto;padding:0 16px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:700}
+.logo small{font-size:11px;font-weight:400;opacity:.8;display:block}
+.body{max-width:980px;margin:0 auto;padding:16px;display:flex;gap:16px}
+.sidebar{width:180px;flex-shrink:0;font-size:12px;font-family:Arial,sans-serif}
+.nav-box{border:1px solid #ccc;background:#fff;margin-bottom:12px}
+.nb-title{background:#ddc090;padding:5px 8px;font-size:11px;font-weight:700}
+.nb-body a{display:block;padding:4px 8px;color:#8b1a1a;text-decoration:none;border-bottom:1px solid #f0ede8;font-size:11px}
+.nb-body a:hover{background:#f9f6f0}
+/* HIDDEN: tiny "v2" link that looks like a version number */
+#secret{color:#ccc !important;font-size:9px !important;padding:2px 8px !important}
+#secret:hover{color:#8b1a1a !important}
+.article{flex:1}
+.article h1{font-size:24px;font-weight:400;border-bottom:1px solid #aaa;padding-bottom:4px;margin-bottom:12px}
+.article h2{font-size:17px;font-weight:400;border-bottom:1px solid #ddd;margin:16px 0 8px;padding-bottom:2px}
+.article p{font-size:13px;line-height:1.7;margin-bottom:10px;color:#333}
+.recipe-card{float:right;margin:0 0 16px 16px;border:1px solid #aaa;background:#f9f9f0;font-size:12px;font-family:Arial,sans-serif;max-width:220px}
+.rc-title{background:#ddc090;padding:5px 8px;font-weight:700;text-align:center}
+.rc-row{padding:3px 8px;border-top:1px solid #e8e5e0;display:flex;gap:8px}
+.rc-row td:first-child{font-weight:700;color:#555;min-width:80px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="hdr-in">
+    <div class="logo">RecetarioUniversal<small>La enciclopedia libre de cocina</small></div>
+    <div style="font-size:12px;font-family:Arial,sans-serif">Buscar: <input type="text" style="padding:3px 8px;font-size:12px"></div>
+  </div>
+</div>
+<div class="body">
+  <div class="sidebar">
+    <div class="nav-box">
+      <div class="nb-title">Navegación</div>
+      <div class="nb-body">
+        <a>Portada</a><a>Recetas del día</a><a>Por país</a><a>Por ingrediente</a><a>Recientes</a>
+        <a id="secret" href="#">v2.1 →</a>
+      </div>
+    </div>
+    <div class="nav-box">
+      <div class="nb-title">Categorías</div>
+      <div class="nb-body">
+        <a>Entradas</a><a>Sopas</a><a>Carnes</a><a>Vegetariano</a><a>Postres</a><a>Bebidas</a>
+      </div>
+    </div>
+  </div>
+  <div class="article">
+    <h1>Pasta Carbonara</h1>
+    <div class="recipe-card">
+      <div class="rc-title">Pasta Carbonara</div>
+      <div class="rc-row"><span style="font-weight:700;color:#555">Origen</span><span>Italia</span></div>
+      <div class="rc-row"><span style="font-weight:700;color:#555">Tipo</span><span>Plato principal</span></div>
+      <div class="rc-row"><span style="font-weight:700;color:#555">Tiempo</span><span>25 min</span></div>
+      <div class="rc-row"><span style="font-weight:700;color:#555">Porciones</span><span>2</span></div>
+      <div class="rc-row"><span style="font-weight:700;color:#555">Dificultad</span><span>Media</span></div>
+    </div>
+    <p>La <strong>pasta carbonara</strong> es uno de los platos más emblemáticos de la cocina italiana, originaria de Roma. A pesar de su sencillez, requiere técnica precisa para lograr la cremosidad característica sin que los huevos se cocinen de más.</p>
+    <h2>Ingredientes</h2>
+    <p>Para 2 porciones: 200g de espagueti, 100g de guanciale o panceta, 2 huevos enteros más 2 yemas, 80g de pecorino romano rallado, pimienta negra molida, sal.</p>
+    <h2>Preparación</h2>
+    <p>Cocina la pasta en abundante agua salada. Mientras tanto, fríe el guanciale sin aceite hasta que esté crujiente. Mezcla los huevos con el queso y mucha pimienta. Fuera del fuego, mezcla la pasta con el guanciale y luego con la mezcla de huevo, agregando agua de cocción para emulsionar.</p>
+    <h2>Errores comunes</h2>
+    <p>El error más frecuente es agregar crema de leche, que no es parte de la receta original. Otro es incorporar la mezcla de huevo sobre el fuego directo, lo que produce huevos revueltos en lugar de la salsa sedosa característica.</p>
+  </div>
+</div>
+<script>
+document.getElementById('secret').addEventListener('click', function(e){
+  e.preventDefault();
+  this.textContent = 'Accediendo…';
+  setTimeout(()=> window.parent.postMessage({action:'surfacePassed',url:'shadowwiki.onion'},'*'), 500);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

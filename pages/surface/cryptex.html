@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>CryptoPrecios — Cotizaciones en tiempo real</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0b0f1a;color:#e0e8ff;font-family:'Segoe UI',Arial,sans-serif}
+.hdr{background:#0d1220;border-bottom:1px solid #1a2040;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700;color:#4488ff}
+.nav a{color:#4466aa;text-decoration:none;font-size:13px;margin-left:16px}
+.nav a:hover{color:#4488ff}
+/* HIDDEN: "Modo Avanzado" link looks disabled */
+#adv-link{color:#1a2a44;text-decoration:none;font-size:11px;margin-left:16px;cursor:pointer;border:1px solid #1a2a44;padding:3px 8px;border-radius:3px;transition:all .2s}
+#adv-link:hover{color:#4488ff;border-color:#4488ff}
+.table-wrap{max-width:900px;margin:24px auto;padding:0 16px}
+.section-title{font-size:11px;letter-spacing:2px;color:#2a4a88;font-weight:700;margin-bottom:12px}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;padding:10px 12px;font-size:10px;letter-spacing:1px;color:#2a4a66;font-weight:700;border-bottom:1px solid #1a2a40}
+td{padding:12px;border-bottom:1px solid #0e1626;font-size:13px}
+tr:hover td{background:#0e1626}
+.sym{font-weight:700;color:#e0e8ff}
+.sym-name{font-size:11px;color:#2a4a88;display:block}
+.price{font-weight:700;color:#ddd}
+.up{color:#22e08a}.dn{color:#f04060}
+.mktcap{color:#4466aa;font-size:12px}
+.vol{color:#2a4a88;font-size:12px}
+.mini-chart{display:flex;align-items:flex-end;gap:2px;height:30px}
+.bar{width:5px;border-radius:1px 1px 0 0}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">₿ CryptoPrecios</div>
+  <nav class="nav">
+    <a>Inicio</a><a>Mercados</a><a>Portafolio</a><a>Noticias</a>
+    <a id="adv-link" href="#">Modo Avanzado ⚙</a>
+  </nav>
+</div>
+<div class="table-wrap">
+  <div class="section-title">◈ COTIZACIONES EN TIEMPO REAL — TOP 10</div>
+  <table>
+    <thead><tr><th>#</th><th>ACTIVO</th><th>PRECIO</th><th>24H</th><th>CAP. MERCADO</th><th>VOLUMEN</th><th>7 DÍAS</th></tr></thead>
+    <tbody id="tbl"></tbody>
+  </table>
+</div>
+<script>
+const DATA=[
+  {r:1,s:'BTC',n:'Bitcoin',p:'$38,420',c:'+2.3%',up:true,mc:'$752B',v:'$28.4B'},
+  {r:2,s:'ETH',n:'Ethereum',p:'$2,140',c:'-0.5%',up:false,mc:'$257B',v:'$14.2B'},
+  {r:3,s:'XMR',n:'Monero',p:'$142.80',c:'+0.8%',up:true,mc:'$2.6B',v:'$124M'},
+  {r:4,s:'SOL',n:'Solana',p:'$108.40',c:'+4.1%',up:true,mc:'$47B',v:'$3.8B'},
+  {r:5,s:'BNB',n:'BNB',p:'$380.20',c:'-1.2%',up:false,mc:'$58B',v:'$1.9B'},
+  {r:6,s:'ADA',n:'Cardano',p:'$0.52',c:'+1.8%',up:true,mc:'$18B',v:'$450M'},
+  {r:7,s:'ZEC',n:'ZCash',p:'$28.40',c:'+4.1%',up:true,mc:'$454M',v:'$72M'},
+  {r:8,s:'LTC',n:'Litecoin',p:'$89.20',c:'-0.7%',up:false,mc:'$6.5B',v:'$620M'},
+  {r:9,s:'DOGE',n:'Dogecoin',p:'$0.089',c:'+3.2%',up:true,mc:'$12.7B',v:'$890M'},
+  {r:10,s:'DOT',n:'Polkadot',p:'$9.40',c:'-1.5%',up:false,mc:'$12.3B',v:'$340M'},
+];
+const tbl=document.getElementById('tbl');
+DATA.forEach(d=>{
+  const bars=Array.from({length:7},()=>`<div class="bar" style="height:${8+Math.random()*20}px;background:${d.up?'rgba(34,224,138,.5)':'rgba(240,64,96,.5)'}"></div>`).join('');
+  tbl.innerHTML+=`<tr><td style="color:#2a4a66">${d.r}</td><td><span class="sym">${d.s}<span class="sym-name">${d.n}</span></span></td><td class="price">${d.p}</td><td class="${d.up?'up':'dn'}">${d.c}</td><td class="mktcap">${d.mc}</td><td class="vol">${d.v}</td><td><div class="mini-chart">${bars}</div></td></tr>`;
+});
+document.getElementById('adv-link').addEventListener('click',function(e){
+  e.preventDefault();
+  this.textContent='Cargando modo avanzado…';
+  this.style.color='#4488ff';this.style.borderColor='#4488ff';
+  setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'cryptex.onion'},'*'),600);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

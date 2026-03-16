@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ID Forge — Document Simulation</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#10080a;color:#c8b8ba;min-height:100vh}
+.hdr{background:#0a0508;border-bottom:1px solid #2a1520;padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:15px;font-weight:700;color:#dd4477;letter-spacing:3px}
+.logo small{display:block;font-size:9px;color:#442233;letter-spacing:1px;font-weight:400}
+.badge{background:#180010;border:1px solid #440022;color:#882244;
+  font-size:9px;letter-spacing:2px;padding:4px 10px;border-radius:3px;font-weight:700}
+
+.tabnav{background:#0c0608;border-bottom:1px solid #1e1018;
+  padding:0 20px;display:flex}
+.tnav{padding:9px 14px;font-size:11px;color:#442233;cursor:pointer;
+  border-bottom:2px solid transparent;transition:all .15s}
+.tnav:hover{color:#dd4477}
+.tnav.on{color:#dd4477;border-bottom-color:#dd4477}
+
+.body{display:flex;padding:20px;gap:22px;max-width:960px;margin:0 auto}
+.form-col{flex:1}
+.prev-col{width:300px;flex-shrink:0}
+
+.disclaimer{background:#0a0508;border:1px solid #2a1520;padding:10px 13px;
+  font-size:10px;color:#553344;line-height:1.7;margin-bottom:18px;border-radius:3px}
+.disclaimer strong{color:#dd4477}
+
+.fsec{margin-bottom:18px}
+.fsec-title{font-size:9px;letter-spacing:2px;color:#442233;font-weight:700;
+  margin-bottom:10px;padding-bottom:5px;border-bottom:1px solid #1e1018}
+.frow{display:flex;gap:11px;margin-bottom:9px}
+.field{flex:1;display:flex;flex-direction:column;gap:4px}
+.flabel{font-size:10px;color:#553344;letter-spacing:.4px}
+.finp{background:#0c0608;border:1px solid #2a1520;color:#c8b8ba;
+  font-family:var(--font);font-size:12px;padding:7px 10px;border-radius:3px;
+  outline:none;width:100%;transition:border-color .2s}
+.finp:focus{border-color:#dd4477}
+.fsel{background:#0c0608;border:1px solid #2a1520;color:#c8b8ba;
+  font-family:var(--font);font-size:12px;padding:7px 10px;border-radius:3px;
+  cursor:pointer;appearance:none;width:100%}
+
+.btn-row{display:flex;gap:9px;margin-top:16px;flex-wrap:wrap}
+.idbtn{background:#dd4477;border:none;color:#fff;font-family:var(--font);font-size:11px;
+  font-weight:700;padding:8px 18px;border-radius:3px;cursor:pointer;letter-spacing:1px;transition:background .15s}
+.idbtn:hover{background:#cc3366}
+.idbtn.o{background:none;border:1px solid #2a1520;color:#553344}
+.idbtn.o:hover{border-color:#dd4477;color:#dd4477}
+
+/* Card preview */
+.card-preview{background:linear-gradient(135deg,#1a0810 0%,#0e0508 100%);
+  border:1px solid #2a1520;border-radius:7px;padding:18px;margin-bottom:12px;
+  position:relative;overflow:hidden;min-height:170px}
+.card-preview::before{content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 18px,
+    rgba(221,68,119,.02) 18px,rgba(221,68,119,.02) 19px);pointer-events:none}
+.card-country{font-size:8px;letter-spacing:3px;color:#442233;margin-bottom:10px;font-weight:700}
+.card-photo{width:58px;height:76px;background:#1a0810;border:1px solid #2a1520;
+  float:right;display:flex;align-items:center;justify-content:center;font-size:26px;border-radius:3px}
+.card-name{font-size:14px;color:#ddd;font-weight:700;margin-bottom:4px}
+.card-dob{font-size:11px;color:#553344;margin-bottom:2px}
+.card-id{font-size:11px;color:#773355;letter-spacing:1px;margin-bottom:2px}
+.card-exp{font-size:10px;color:#442233}
+.clearfix::after{content:'';display:table;clear:both}
+.card-bar{height:26px;background:#080408;margin-top:12px;border-radius:2px}
+.card-mrz{font-size:8px;color:#220a14;letter-spacing:2px;margin-top:3px;
+  font-family:'Courier New',monospace;line-height:1.6;word-break:break-all}
+
+.watermarks{background:#0a0508;border:1px solid #1e1018;padding:10px 13px;
+  border-radius:3px;font-size:10px;color:#331122;line-height:1.9}
+.watermarks .wm-title{color:#dd4477;font-weight:700;margin-bottom:4px;font-size:11px}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">IDFORGE<small>idforge.onion · Estudio de Simulación de Documentos</small></div>
+  <div class="badge">⚠ SOLO DOCUMENTOS FICTICIOS</div>
+</div>
+
+<div class="tabnav">
+  <div class="tnav on">🪪 Cédulas</div>
+  <div class="tnav">🛂 Pasaportes</div>
+  <div class="tnav">🚗 Licencias</div>
+  <div class="tnav">🎓 Académicos</div>
+  <div class="tnav">🏢 Corporativos</div>
+  <div class="tnav">📜 Plantillas</div>
+</div>
+
+<div class="body">
+  <div class="form-col">
+    <div class="disclaimer">
+      <strong>⚠ AVISO LEGAL:</strong> Todos los documentos generados por IDForge están claramente marcados como FICTICIOS y destinados únicamente a escritura creativa, desarrollo de juegos, utilería cinematográfica y capacitación en seguridad. La generación y uso de documentos fraudulentos reales es ilegal.
+    </div>
+
+    <div class="fsec">
+      <div class="fsec-title">◈ INFORMACIÓN PERSONAL</div>
+      <div class="frow">
+        <div class="field">
+          <label class="flabel">Nombre</label>
+          <input class="finp" id="f-first" type="text" value="Juan">
+        </div>
+        <div class="field">
+          <label class="flabel">Apellido</label>
+          <input class="finp" id="f-last" type="text" value="García">
+        </div>
+      </div>
+      <div class="frow">
+        <div class="field">
+          <label class="flabel">Fecha de Nacimiento</label>
+          <input class="finp" id="f-dob" type="text" value="1989-07-22">
+        </div>
+        <div class="field">
+          <label class="flabel">Género</label>
+          <select class="fsel">
+            <option>Masculino</option><option>Femenino</option><option>No binario</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="field">
+          <label class="flabel">Nacionalidad</label>
+          <select class="fsel" id="f-country">
+            <option>NACIÓN FICTICIA</option>
+            <option>REPÚBLICA DE NINGÚN LADO</option>
+            <option>ESTADO DEMO</option>
+            <option>PAÍS SIMULADO</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="flabel">Número de Documento</label>
+          <input class="finp" id="f-num" type="text" value="FICT-8821-7744">
+        </div>
+      </div>
+    </div>
+
+    <div class="fsec">
+      <div class="fsec-title">◈ OPCIONES DE DOCUMENTO</div>
+      <div class="frow">
+        <div class="field">
+          <label class="flabel">Estilo de Plantilla</label>
+          <select class="fsel">
+            <option>Cédula Biométrica Moderna</option>
+            <option>ID Clásico con Foto</option>
+            <option>Tarjeta Inteligente</option>
+            <option>Estilo Licencia</option>
+          </select>
+        </div>
+        <div class="field">
+          <label class="flabel">Fecha de Expiración</label>
+          <input class="finp" id="f-exp" type="text" value="2029-07-22">
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row">
+      <button class="idbtn" id="gen-btn">▶ Generar Vista Previa</button>
+      <button class="idbtn o" id="rand-btn">🎲 Aleatorio</button>
+      <button class="idbtn o">↓ Exportar PNG</button>
+    </div>
+  </div>
+
+  <div class="prev-col">
+    <div class="card-preview" id="card-preview">
+      <div class="card-country">◈ NACIÓN FICTICIA — DOCUMENTO DEMO ◈</div>
+      <div class="card-photo">👤</div>
+      <div class="card-name" id="p-name">GARCÍA, JUAN</div>
+      <div class="card-dob" id="p-dob">NAC: 1989-07-22</div>
+      <div class="card-id" id="p-id">DOC: FICT-8821-7744</div>
+      <div class="card-exp" id="p-exp">EXP: 2029-07-22</div>
+      <div class="clearfix"></div>
+      <div class="card-bar"></div>
+      <div class="card-mrz" id="p-mrz">
+        PFICT&lt;GARCIA&lt;&lt;JUAN&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;<br>
+        FICT8821774489072218012294&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;
+      </div>
+    </div>
+
+    <div class="watermarks">
+      <div class="wm-title">◈ MARCAS DE AGUA APLICADAS:</div>
+      <div>• FICTICIO impreso en capa UV</div>
+      <div>• Checksum MRZ inválido</div>
+      <div>• Código de país inexistente</div>
+      <div>• Formato de número no válido</div>
+      <div>• Encabezado SOLO USO FICTICIO</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function update(){
+  const first = document.getElementById('f-first').value||'JUAN';
+  const last  = document.getElementById('f-last').value||'GARCIA';
+  const dob   = document.getElementById('f-dob').value||'1989-01-01';
+  const num   = document.getElementById('f-num').value||'FICT-0000';
+  const exp   = document.getElementById('f-exp').value||'2029-01-01';
+  document.getElementById('p-name').textContent = `${last.toUpperCase()}, ${first.toUpperCase()}`;
+  document.getElementById('p-dob').textContent  = `NAC: ${dob}`;
+  document.getElementById('p-id').textContent   = `DOC: ${num}`;
+  document.getElementById('p-exp').textContent  = `EXP: ${exp}`;
+  const mrz1 = `PFICT<${last.toUpperCase().substring(0,9).padEnd(9,'<')}<<${first.toUpperCase().substring(0,9).padEnd(9,'<')}`.substring(0,44).padEnd(44,'<');
+  const mrz2 = `${num.replace(/[^A-Z0-9]/gi,'').toUpperCase().substring(0,9).padEnd(9,'<')}${dob.replace(/-/g,'').substring(2)}1${exp.replace(/-/g,'').substring(2)}4`.padEnd(44,'<');
+  document.getElementById('p-mrz').innerHTML = mrz1+'<br>'+mrz2;
+}
+
+document.getElementById('gen-btn').addEventListener('click', update);
+
+const FIRSTS = ['Alex','Sam','Morgan','Jordan','Casey','Riley','Avery','Quinn','Dana','Blake'];
+const LASTS  = ['Smith','Johnson','Williams','Brown','Jones','Garcia','Miller','Davis','Martínez','López'];
+document.getElementById('rand-btn').addEventListener('click',()=>{
+  const f=FIRSTS[Math.floor(Math.random()*FIRSTS.length)];
+  const l=LASTS[Math.floor(Math.random()*LASTS.length)];
+  const y=1965+Math.floor(Math.random()*40);
+  const m=String(Math.floor(Math.random()*12)+1).padStart(2,'0');
+  const d=String(Math.floor(Math.random()*28)+1).padStart(2,'0');
+  const n='FICT-'+Math.floor(Math.random()*9000+1000)+'-'+Math.floor(Math.random()*9000+1000);
+  const ey=y+40;
+  document.getElementById('f-first').value=f;
+  document.getElementById('f-last').value=l;
+  document.getElementById('f-dob').value=`${y}-${m}-${d}`;
+  document.getElementById('f-num').value=n;
+  document.getElementById('f-exp').value=`${ey}-${m}-${d}`;
+  update();
+});
+
+document.querySelectorAll('.tnav').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tnav').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+  });
+});
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

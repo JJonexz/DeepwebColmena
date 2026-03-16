@@ -1,0 +1,19 @@
+/* La Colmena — Shared page variables */
+:root {
+  --bg0:#04060e; --bg1:#080c18; --bg2:#0e1422; --bg3:#141d2e;
+  --bdr:#1e2d4a;
+  --blue:#3d8bff; --cyan:#22d4f5; --green:#22e08a; --red:#f04060; --gold:#f5c842;
+  --t1:#dde4f8; --t2:#7a90bb; --t3:#3a4d72;
+  --font:'JetBrains Mono','Courier New',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100%;font-family:var(--font);color:var(--t1)}
+body{overflow-x:hidden}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg0)}
+::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--blue)}
+.go{cursor:pointer;color:var(--blue);text-decoration:none;transition:opacity .15s}
+.go:hover{opacity:.7;text-decoration:underline}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.fadeup{animation:fadeUp .3s ease}

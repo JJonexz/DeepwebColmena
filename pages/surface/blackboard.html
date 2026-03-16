@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AvisosClasificados — Empleos y servicios</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f8f8f8;font-family:Arial,sans-serif;color:#333}
+.hdr{background:#222;color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700;color:#ffcc00}
+.nav a{color:#aaa;text-decoration:none;font-size:13px;margin-left:14px}
+.nav a:hover{color:#fff}
+.subhdr{background:#333;padding:8px 20px;display:flex;align-items:center;gap:14px}
+.filter select{background:#444;border:none;color:#ccc;padding:5px 10px;font-size:12px;border-radius:3px}
+/* HIDDEN: "Sin restricciones" as filter option */
+.body{max-width:960px;margin:16px auto;padding:0 16px;display:grid;grid-template-columns:1fr 220px;gap:16px}
+.listing{background:#fff;border:1px solid #ddd;padding:14px;margin-bottom:10px;cursor:pointer;transition:background .1s}
+.listing:hover{background:#fffde7}
+.l-title{font-size:15px;font-weight:700;color:#222;margin-bottom:4px}
+.l-loc{font-size:12px;color:#888;margin-bottom:5px}
+.l-desc{font-size:12px;color:#666;line-height:1.5}
+.l-tags{margin-top:7px;display:flex;gap:5px}
+.ltag{font-size:10px;padding:2px 7px;border:1px solid #ddd;border-radius:10px;color:#888}
+.l-pay{font-size:14px;font-weight:700;color:#2e7d32;margin-top:5px}
+.sidebar-widget{background:#fff;border:1px solid #ddd;padding:12px;margin-bottom:12px}
+.sw-title{font-size:12px;font-weight:700;color:#333;margin-bottom:8px;text-transform:uppercase}
+.sw-link{display:block;color:#1976d2;text-decoration:none;font-size:12px;padding:3px 0;border-bottom:1px solid #f5f5f5}
+.sw-link:hover{color:#0d47a1}
+footer{background:#222;color:#888;padding:14px 20px;text-align:center;font-size:11px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">📋 AvisosClasificados</div>
+  <nav class="nav"><a>Empleos</a><a>Servicios</a><a>Venta</a><a>Alquiler</a><a>Publicar</a></nav>
+</div>
+<div class="subhdr">
+  <span style="color:#aaa;font-size:12px">Filtrar por:</span>
+  <select id="filter-sel">
+    <option>Todas las categorías</option>
+    <option>Tecnología</option>
+    <option>Diseño</option>
+    <option>Marketing</option>
+    <option value="sin-restricciones">Sin restricciones ●</option>
+  </select>
+  <select><option>Cualquier ubicación</option><option>Remoto</option><option>Buenos Aires</option></select>
+  <select><option>Cualquier salario</option><option>$500-1000</option><option>$1000-3000</option></select>
+</div>
+<div class="body">
+  <div>
+    <div class="listing"><div class="l-title">Desarrollador Full Stack — React + Node.js</div><div class="l-loc">📍 Remoto · Publicado hace 2h</div><div class="l-desc">Empresa tech busca developer senior con 3+ años de experiencia en React y Node. Trabajo remoto 100%.</div><div class="l-tags"><span class="ltag">React</span><span class="ltag">Node.js</span><span class="ltag">Remoto</span></div><div class="l-pay">$2,500/mes</div></div>
+    <div class="listing"><div class="l-title">Diseñador UX/UI — Startup fintech</div><div class="l-loc">📍 Buenos Aires · Publicado hace 5h</div><div class="l-desc">Buscamos diseñador para mejorar la experiencia de usuario de nuestra app de pagos.</div><div class="l-tags"><span class="ltag">Figma</span><span class="ltag">UX</span><span class="ltag">Fintech</span></div><div class="l-pay">$1,800/mes</div></div>
+    <div class="listing"><div class="l-title">Community Manager — Redes Sociales</div><div class="l-loc">📍 Remoto · Publicado hace 1d</div><div class="l-desc">Gestión de redes sociales para marca de indumentaria. Part-time, horarios flexibles.</div><div class="l-tags"><span class="ltag">Social Media</span><span class="ltag">Part-time</span></div><div class="l-pay">$800/mes</div></div>
+    <div class="listing"><div class="l-title">Analista de Datos — Excel avanzado</div><div class="l-loc">📍 Córdoba · Publicado hace 2d</div><div class="l-desc">Empresa de logística busca analista para dashboards y reportes en Excel y Power BI.</div><div class="l-tags"><span class="ltag">Excel</span><span class="ltag">Power BI</span></div><div class="l-pay">$1,200/mes</div></div>
+  </div>
+  <div>
+    <div class="sidebar-widget"><div class="sw-title">Categorías</div>
+      <a class="sw-link">Tecnología (234)</a><a class="sw-link">Diseño (89)</a>
+      <a class="sw-link">Marketing (145)</a><a class="sw-link">Ventas (312)</a>
+      <a class="sw-link">Administración (78)</a>
+    </div>
+    <div class="sidebar-widget"><div class="sw-title">Publicar aviso</div>
+      <p style="font-size:12px;color:#888;margin-bottom:10px">Llega a miles de candidatos. 3 publicaciones gratis.</p>
+      <button style="width:100%;background:#ffcc00;border:none;padding:9px;font-size:13px;font-weight:700;cursor:pointer;border-radius:3px">Publicar gratis</button>
+    </div>
+  </div>
+</div>
+<footer>© 2024 AvisosClasificados · Encontrá tu próximo trabajo</footer>
+<script>
+document.getElementById('filter-sel').addEventListener('change',function(){
+  if(this.value==='sin-restricciones'){
+    this.style.background='#333';this.style.color='#ffcc00';
+    setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'blackboard.onion'},'*'),500);
+  }
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MailNode — Encrypted Email</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0a0a10;color:#bbb;min-height:100vh;display:flex;flex-direction:column}
+.hdr{background:#080810;border-bottom:1px solid #1e1e2a;padding:9px 18px;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.logo{font-size:15px;font-weight:700;color:#4488ff;letter-spacing:3px}
+.logo small{display:block;font-size:9px;color:#2a3a66;letter-spacing:1px;font-weight:400}
+.hdr-r{display:flex;align-items:center;gap:10px;font-size:11px;color:#444}
+.btn{background:#4488ff;border:none;color:#fff;font-family:var(--font);font-size:10px;
+  padding:5px 11px;border-radius:3px;cursor:pointer;letter-spacing:1px;transition:background .15s}
+.btn:hover{background:#3377ee}
+.btn.g{background:none;border:1px solid #4488ff;color:#4488ff}
+.btn.g:hover{background:#4488ff;color:#fff}
+
+/* Login */
+#login-view{flex:1;display:flex;align-items:center;justify-content:center}
+.login-box{background:#0d0d14;border:1px solid #1e1e2a;padding:36px;border-radius:8px;
+  min-width:320px;display:flex;flex-direction:column;gap:14px;align-items:center}
+.login-box h2{font-size:15px;color:#4488ff;letter-spacing:3px}
+.inp{width:100%;background:#080810;border:1px solid #1e1e2a;color:#bbb;
+  font-family:var(--font);font-size:12px;padding:8px 11px;border-radius:3px;outline:none;
+  transition:border-color .2s}
+.inp:focus{border-color:#4488ff}
+
+/* App */
+#app-view{flex:1;display:flex;overflow:hidden}
+.sidebar{width:185px;flex-shrink:0;background:#080810;border-right:1px solid #151520;
+  display:flex;flex-direction:column;padding:10px 0}
+.compose-btn{margin:0 10px 14px;background:#4488ff;border:none;color:#fff;
+  font-family:var(--font);font-size:11px;padding:8px;border-radius:3px;
+  cursor:pointer;letter-spacing:1px;font-weight:700;transition:background .15s}
+.compose-btn:hover{background:#3377ee}
+.folder{display:flex;align-items:center;gap:8px;padding:7px 14px;
+  font-size:12px;color:#444;cursor:pointer;transition:all .15s}
+.folder:hover{background:#0d0d14;color:#888}
+.folder.on{background:#0e0e15;color:#4488ff}
+.folder-icon{font-size:13px}
+.folder-badge{margin-left:auto;background:#4488ff;color:#fff;font-size:9px;
+  padding:1px 5px;border-radius:8px;font-weight:700}
+.quota{margin-top:auto;padding:10px 14px;border-top:1px solid #151520}
+.quota-bar{height:3px;background:#151520;border-radius:2px;margin:5px 0}
+.quota-fill{height:100%;background:#4488ff;border-radius:2px;width:23%}
+.quota-txt{font-size:10px;color:#2a2a44}
+
+.list-pane{width:300px;flex-shrink:0;background:#0d0d12;
+  border-right:1px solid #151520;overflow-y:auto}
+.list-hdr{padding:9px 12px;border-bottom:1px solid #151520;
+  font-size:9px;color:#2a3a66;letter-spacing:2px;font-weight:700;
+  display:flex;align-items:center;justify-content:space-between}
+.msg-item{padding:9px 12px;border-bottom:1px solid #12121a;cursor:pointer;transition:background .15s}
+.msg-item:hover{background:#111118}
+.msg-item.on{background:#0e0e18;border-left:2px solid #4488ff}
+.msg-item.unread .msg-subj{color:#fff;font-weight:700}
+.msg-from{font-size:11px;color:#666;margin-bottom:3px;display:flex;justify-content:space-between}
+.msg-from span{color:#333;font-size:10px}
+.msg-subj{font-size:12px;color:#777;margin-bottom:3px}
+.msg-prev{font-size:10px;color:#333;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.msg-tags{margin-top:3px;display:flex;gap:3px}
+.mtag{font-size:8px;padding:1px 5px;border-radius:2px;font-weight:700}
+.mtag-enc{background:#001a10;color:#00aa66}
+.mtag-pgp{background:#151525;color:#6666bb}
+.mtag-flag{background:#1a0a0a;color:#aa4444}
+
+.read-pane{flex:1;padding:18px 22px;overflow-y:auto;background:#0a0a10}
+.pgp-banner{background:#001a0f;border:1px solid #006633;padding:7px 11px;
+  font-size:10px;color:#00aa66;margin-bottom:11px;letter-spacing:.4px}
+.read-subj{font-size:17px;color:#ddd;margin-bottom:11px}
+.read-meta{font-size:11px;color:#444;line-height:1.9;margin-bottom:14px;
+  padding-bottom:14px;border-bottom:1px solid #151520}
+.read-meta span{color:#666}
+.read-body{font-size:12px;color:#888;line-height:1.9;white-space:pre-line}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="logo">MAILNODE<small>mailnode.onion · Cifrado · Anónimo · PGP</small></div>
+  <div class="hdr-r" id="hdr-r">
+    <span style="font-size:10px;color:#2a3a66">Correo seguro en la red oculta</span>
+    <button class="btn g" id="reg-btn">Registrarse</button>
+  </div>
+</div>
+
+<div id="login-view">
+  <div class="login-box">
+    <div style="font-size:30px">✉️</div>
+    <h2>MAILNODE</h2>
+    <div style="font-size:9px;color:#2a3a66;letter-spacing:2px;margin-top:-8px">CORREO ANÓNIMO CIFRADO</div>
+    <input class="inp" id="user-in" type="text" placeholder="Usuario o dirección .onion" value="anon_7f4a2c">
+    <input class="inp" id="pass-in" type="password" placeholder="Contraseña" value="••••••••••">
+    <input class="inp" type="text" placeholder="Frase PGP (opcional)" style="opacity:.45">
+    <button class="btn" id="login-btn" style="width:100%;padding:9px">INICIAR SESIÓN</button>
+    <div style="font-size:10px;color:#1a2a44">
+      ¿Nuevo? <span style="color:#4488ff;cursor:pointer">Crear cuenta anónima</span>
+    </div>
+  </div>
+</div>
+
+<div id="app-view" style="display:none">
+  <div class="sidebar">
+    <button class="compose-btn">✏ Redactar</button>
+    <div class="folder on"><span class="folder-icon">📥</span>Entrada<span class="folder-badge">2</span></div>
+    <div class="folder"><span class="folder-icon">📤</span>Enviados</div>
+    <div class="folder"><span class="folder-icon">📝</span>Borradores<span class="folder-badge">1</span></div>
+    <div class="folder"><span class="folder-icon">🗑️</span>Papelera</div>
+    <div class="folder"><span class="folder-icon">🔒</span>Claves PGP</div>
+    <div class="quota">
+      <div style="font-size:9px;color:#1a2a44;letter-spacing:1px;margin-bottom:4px">ALMACENAMIENTO</div>
+      <div class="quota-bar"><div class="quota-fill"></div></div>
+      <div class="quota-txt">23 MB / 100 MB usados</div>
+    </div>
+  </div>
+
+  <div class="list-pane">
+    <div class="list-hdr"><span>ENTRADA</span><span id="msg-count">6 mensajes</span></div>
+    <div id="msg-list"></div>
+  </div>
+
+  <div class="read-pane" id="read-pane">
+    <div style="display:flex;align-items:center;justify-content:center;height:100%;
+      font-size:11px;color:#2a3a66;letter-spacing:1px">
+      Selecciona un mensaje para leerlo
+    </div>
+  </div>
+</div>
+
+<script>
+const MSGS = [
+  {from:'marketplace-escrow@marketcore.onion',subj:'[CUSTODIA] Orden #MC-8841 confirmada',
+   time:'10:42',unread:true,tags:['enc','pgp'],
+   body:`Tu pago de custodia para la Orden #MC-8841 ha sido confirmado.\n\nMonto: 0.0042 BTC\nVendedor: CryptoVendor_88\nEstado: En Tránsito\nETA: 2-5 días hábiles\n\nNo finalices anticipadamente. Contacta soporte si hay problemas.\n\n[MENSAJE FIRMADO PGP]`},
+  {from:'anon_prime@cryptoforum.onion',subj:'Re: Hilo OPSEC — mensaje privado',
+   time:'09:15',unread:true,tags:['pgp'],
+   body:`Hola,\n\nVi tu post en el hilo OPSEC. Hiciste buenos puntos sobre compartimentalización.\n\nLlevo 6 años en esto. El mayor riesgo que la gente ignora no es técnico — es la correlación temporal. Mantente alerta.\n\nClave PGP adjunta. Movamos esta conversación allí.\n\n-- anon_prime`},
+  {from:'system@mailnode.onion',subj:'Tu cuenta fue accedida desde un nuevo nodo',
+   time:'Ayer',unread:false,tags:['flag'],
+   body:`ALERTA DE SEGURIDAD\n\nTu cuenta MailNode fue accedida desde un nuevo nodo Tor.\n\nHuella del nodo: A4F7...3B92\nHora: 2024-03-13 03:41 UTC\n\nSi no fuiste tú, cambia tu contraseña inmediatamente.\n\nEquipo de Seguridad MailNode`},
+  {from:'v0id@ghostchat.onion',subj:'Intercambio de clave — nueva huella PGP',
+   time:'Hace 2d',unread:false,tags:['pgp','enc'],
+   body:`Rotando claves.\n\nNueva huella PGP:\nFA32 8A10 EE71 4B23 9C4D 2AB3 17F8 0934 BC12 A45E\n\nActualiza tu llavero. Clave antigua expira en 7 días.\n\n-- v0id`},
+  {from:'noreply@datavault.onion',subj:'Nueva entrega: CLASSIFIED_2024_Q1.7z',
+   time:'Hace 3d',unread:false,tags:['enc'],
+   body:`Se ha subido un nuevo archivo a tu dirección de entrega DataVault.\n\nArchivo: CLASSIFIED_2024_Q1.7z\nTamaño: 847 MB\nChecksum (SHA-256): 3f7a2b9c1e4d6a8b...\nDisponible por: 72 horas\n\nClave de descifrado enviada por canal separado.`},
+  {from:'admin@cryptoforum.onion',subj:'[MOD] Tu post ha sido aprobado',
+   time:'Hace 4d',unread:false,tags:[],
+   body:`Tu post "Evasión de soluciones EDR en 2024" fue aprobado por un moderador y ya es visible.\n\nRecuerda mantener posts en tema y seguir las reglas del foro.\n\nStaff de CryptoForum`},
+];
+
+let active = 0;
+
+function renderList(){
+  const list = document.getElementById('msg-list');
+  list.innerHTML = MSGS.map((m,i)=>`
+  <div class="msg-item ${i===active?'on':''} ${m.unread?'unread':''}" onclick="selectMsg(${i})">
+    <div class="msg-from">${m.from.split('@')[0]} <span>${m.time}</span></div>
+    <div class="msg-subj">${m.subj}</div>
+    <div class="msg-prev">${m.body.substring(0,55)}…</div>
+    <div class="msg-tags">
+      ${m.tags.includes('enc')?'<span class="mtag mtag-enc">ENC</span>':''}
+      ${m.tags.includes('pgp')?'<span class="mtag mtag-pgp">PGP</span>':''}
+      ${m.tags.includes('flag')?'<span class="mtag mtag-flag">ALERTA</span>':''}
+    </div>
+  </div>`).join('');
+}
+
+function selectMsg(i){
+  active = i;
+  const m = MSGS[i];
+  m.unread = false;
+  renderList();
+  document.getElementById('read-pane').innerHTML = `
+    ${m.tags.includes('pgp')?'<div class="pgp-banner">🔐 FIRMA PGP VERIFICADA — Este mensaje está firmado criptográficamente</div>':''}
+    <div class="read-subj">${m.subj}</div>
+    <div class="read-meta">
+      De: <span>${m.from}</span><br>
+      Para: <span>anon_7f4a2c@mailnode.onion</span><br>
+      Fecha: <span>2024-03-14 ${m.time}</span><br>
+      Cifrado: <span style="color:#44dd66">Sí (AES-256)</span>
+    </div>
+    <div class="read-body">${m.body}</div>`;
+}
+
+document.getElementById('login-btn').addEventListener('click', ()=>{
+  document.getElementById('login-view').style.display='none';
+  document.getElementById('app-view').style.display='flex';
+  document.getElementById('hdr-r').innerHTML=`
+    <span style="color:#4488ff">anon_7f4a2c</span>
+    <button class="btn g" onclick="logout()">Cerrar Sesión</button>`;
+  renderList();
+  selectMsg(0);
+});
+document.getElementById('pass-in').addEventListener('keydown',e=>e.key==='Enter'&&document.getElementById('login-btn').click());
+
+function logout(){
+  document.getElementById('login-view').style.display='flex';
+  document.getElementById('app-view').style.display='none';
+  document.getElementById('hdr-r').innerHTML=`
+    <span style="font-size:10px;color:#2a3a66">Correo seguro en la red oculta</span>
+    <button class="btn g" id="reg-btn">Registrarse</button>`;
+}
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

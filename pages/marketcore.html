@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>MarketCore — Anonymous Marketplace</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0a0a0c;color:#bbb;min-height:100vh}
+a,button{cursor:pointer}
+
+/* Header */
+.mkt-hdr{background:#0d0d10;border-bottom:1px solid #1e1e28;padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.mkt-logo{font-size:16px;font-weight:700;color:#e8a000;letter-spacing:2px}
+.mkt-logo span{display:block;font-size:10px;color:#555;font-weight:400;letter-spacing:1px}
+.mkt-nav{display:flex;gap:16px}
+.mkt-nav a{color:#666;font-size:11px;text-decoration:none;letter-spacing:1px;transition:color .15s}
+.mkt-nav a:hover{color:#e8a000}
+.mkt-hdr-r{display:flex;gap:10px;align-items:center}
+.bal{font-size:11px;color:#666}
+.bal b{color:#f7931a}
+.mbtn{background:#e8a000;border:none;color:#000;font-family:var(--font);font-size:10px;
+  font-weight:700;padding:5px 12px;border-radius:3px;letter-spacing:1px;transition:background .15s}
+.mbtn:hover{background:#c87d00}
+.mbtn.out{background:none;border:1px solid #e8a000;color:#e8a000}
+.mbtn.out:hover{background:#e8a000;color:#000}
+
+/* Category bar */
+.cats{background:#0c0c0f;border-bottom:1px solid #1a1a20;padding:7px 20px;
+  display:flex;gap:4px;overflow-x:auto}
+.cats::-webkit-scrollbar{height:3px}
+.catbtn{background:#151519;border:1px solid #1e1e26;color:#555;font-family:var(--font);
+  font-size:10px;padding:4px 12px;border-radius:20px;letter-spacing:.5px;white-space:nowrap;
+  transition:all .15s}
+.catbtn.on,.catbtn:hover{background:#e8a000;border-color:#e8a000;color:#000}
+
+/* Layout */
+.body{display:flex;padding:16px 20px;gap:16px}
+.sidebar{width:190px;flex-shrink:0}
+.fbox{background:#0d0d10;border:1px solid #1e1e26;border-radius:4px;padding:12px;margin-bottom:10px}
+.ftitle{font-size:9px;letter-spacing:2px;color:#444;font-weight:700;margin-bottom:8px}
+.fitem{display:flex;align-items:center;gap:6px;font-size:11px;color:#555;
+  padding:3px 0;transition:color .15s}
+.fitem:hover{color:#e8a000}
+.fitem input{accent-color:#e8a000}
+
+.main{flex:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.rcount{font-size:11px;color:#444}
+.msort{background:#0d0d10;border:1px solid #1e1e26;color:#777;font-family:var(--font);
+  font-size:11px;padding:4px 8px;border-radius:3px}
+
+.banner{background:linear-gradient(90deg,#1a0f00,#130d03);border:1px solid #3a2400;
+  border-radius:4px;padding:14px 18px;margin-bottom:16px;
+  display:flex;align-items:center;justify-content:space-between}
+.blabel{font-size:9px;letter-spacing:2px;color:#e8a000;font-weight:700;margin-bottom:4px}
+.btxt{font-size:13px;color:#ccc}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:12px}
+.card{background:#0d0d10;border:1px solid #1e1e26;border-radius:4px;overflow:hidden;
+  transition:all .2s}
+.card:hover{border-color:#e8a000;transform:translateY(-2px);
+  box-shadow:0 4px 18px rgba(232,160,0,.08)}
+.card-img{width:100%;height:110px;background:#131318;display:flex;align-items:center;
+  justify-content:center;font-size:34px;border-bottom:1px solid #1a1a20}
+.card-b{padding:9px}
+.card-name{font-size:12px;color:#ccc;margin-bottom:3px;line-height:1.3}
+.card-seller{font-size:10px;color:#444;margin-bottom:5px}
+.card-seller span{color:#e8a000}
+.card-price{font-size:13px;font-weight:700;color:#f7931a}
+.card-price small{font-size:10px;color:#444;font-weight:400}
+.card-ft{display:flex;align-items:center;justify-content:space-between;
+  padding:6px 9px 9px}
+.stars{color:#e8a000;font-size:10px}
+.sold{font-size:10px;color:#333}
+</style>
+</head>
+<body>
+
+<div class="mkt-hdr">
+  <div class="mkt-logo">MARKET<span style="color:#e8a000;display:inline">CORE</span>
+    <span>MERCADO ANÓNIMO · DESDE 2019</span>
+  </div>
+  <nav class="mkt-nav">
+    <a>Inicio</a><a>Mercado</a><a>Custodia</a><a>Disputas</a><a>Reglas</a>
+  </nav>
+  <div class="mkt-hdr-r">
+    <span class="bal">Balance: <b>0.1842 BTC</b></span>
+    <button class="mbtn out">Clave PGP</button>
+    <button class="mbtn">Mi Cuenta</button>
+  </div>
+</div>
+
+
+<div style="background:#1a0800;border-bottom:1px solid #3a2000;padding:8px 20px;font-size:11px;color:#aa6600;display:flex;align-items:center;gap:10px">
+  <span>⚠</span>
+  <span>Las descargas en este sitio pueden contener software malicioso. <strong style="color:#e8a000">Asegurate de tener VPN activo</strong> antes de descargar.</span>
+</div>
+<div class="cats">
+  <button class="catbtn on">Todo</button>
+  <button class="catbtn">Cuentas</button>
+  <button class="catbtn">Datos</button>
+  <button class="catbtn">Exploits</button>
+  <button class="catbtn">Documentos</button>
+  <button class="catbtn">Hosting</button>
+  <button class="catbtn">Redes</button>
+  <button class="catbtn">Servicios</button>
+  <button class="catbtn">Herramientas</button>
+</div>
+
+<div class="body">
+  <div class="sidebar">
+    <div class="fbox">
+      <div class="ftitle">PRECIO (BTC)</div>
+      <label class="fitem"><input type="checkbox"> 0 – 0.005</label>
+      <label class="fitem"><input type="checkbox"> 0.005 – 0.01</label>
+      <label class="fitem"><input type="checkbox"> 0.01 – 0.05</label>
+      <label class="fitem"><input type="checkbox"> 0.05+</label>
+    </div>
+    <div class="fbox">
+      <div class="ftitle">NIVEL VENDEDOR</div>
+      <label class="fitem"><input type="checkbox"> Confiable (★★★★★)</label>
+      <label class="fitem"><input type="checkbox"> Verificado (★★★★)</label>
+      <label class="fitem"><input type="checkbox"> Nuevo</label>
+      <label class="fitem"><input type="checkbox"> FE Habilitado</label>
+    </div>
+    <div class="fbox">
+      <div class="ftitle">ENTREGA</div>
+      <label class="fitem"><input type="checkbox"> Solo Digital</label>
+      <label class="fitem"><input type="checkbox"> Mundial</label>
+      <label class="fitem"><input type="checkbox"> Solo UE</label>
+      <label class="fitem"><input type="checkbox"> Solo US</label>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="banner">
+      <div>
+        <div class="blabel">◈ VENDEDOR DESTACADO DE LA SEMANA</div>
+        <div class="btxt">CryptoVendor_88 — 2,400+ ventas · PGP Verificado · Custodia Disponible</div>
+      </div>
+      <button class="mbtn">Ver Tienda →</button>
+    </div>
+
+    <div class="topbar">
+      <div class="rcount" id="rcount">16 listados encontrados</div>
+      <select class="msort">
+        <option>Ordenar: Más nuevos</option>
+        <option>Precio: Menor a Mayor</option>
+        <option>Precio: Mayor a Menor</option>
+        <option>Mejor Puntuación</option>
+        <option>Más Vendidos</option>
+      </select>
+    </div>
+
+    <div class="grid" id="grid"></div>
+  </div>
+</div>
+
+<script>
+const PRODUCTS = [
+  {icon:'🔐',name:'ProtonMail Premium × 5',         price:'0.0042 BTC',usd:'$162', seller:'CryptoVendor_88',rep:'★★★★★',sold:847},
+  {icon:'📡',name:'Zero-Day RDP Exploit Kit v3.1',   price:'0.031 BTC', usd:'$1,190',seller:'ShadowDev',     rep:'★★★★☆',sold:312},
+  {icon:'💳',name:'Cuentas PayPal Verificadas × 10', price:'0.008 BTC', usd:'$307', seller:'CardMaster_X',  rep:'★★★★★',sold:2341},
+  {icon:'🖥️',name:'VPS 10Gbps Sin Registros',       price:'0.0018 BTC',usd:'$69',  seller:'AnonHost',      rep:'★★★★☆',sold:589},
+  {icon:'📧',name:'Gmail Aged Accounts × 50',        price:'0.0055 BTC',usd:'$211', seller:'GmailFactory',  rep:'★★★☆☆',sold:1420},
+  {icon:'🔑',name:'SSH Private Keys Dump 2024',      price:'0.015 BTC', usd:'$576', seller:'DataBroker_9',  rep:'★★★★☆',sold:88},
+  {icon:'📱',name:'SIM Swap Service — US Carriers',  price:'0.025 BTC', usd:'$961', seller:'PhoneHacker',   rep:'★★★★★',sold:203},
+  {icon:'🌐',name:'Proxies Residenciales × 500',     price:'0.0095 BTC',usd:'$365', seller:'ProxyKing',     rep:'★★★★☆',sold:764},
+  {icon:'🗂️',name:'Base Datos Corporativa US 2024', price:'0.04 BTC',  usd:'$1,536',seller:'DataLeak_USA', rep:'★★★☆☆',sold:56},
+  {icon:'🔓',name:'Crackeo WPA2 Handshake — 1hr',   price:'0.0012 BTC',usd:'$46',  seller:'WiFiCracker',   rep:'★★★★☆',sold:3218},
+  {icon:'🛂',name:'Plantilla Licencia UE PSD',       price:'0.006 BTC', usd:'$230', seller:'DocForge',      rep:'★★★★★',sold:498},
+  {icon:'💻',name:'Remote Access Trojan — FUD',      price:'0.022 BTC', usd:'$845', seller:'MalwareDev',    rep:'★★★★☆',sold:134},
+  {icon:'🏦',name:'Login Bancario × 3 — $10k+',     price:'0.019 BTC', usd:'$730', seller:'FinancialHax',  rep:'★★★★★',sold:276},
+  {icon:'📦',name:'Fullz US Identity × 20',          price:'0.013 BTC', usd:'$499', seller:'FullzSupplier', rep:'★★★☆☆',sold:1893},
+  {icon:'🔮',name:'IP Logger & Tracker SaaS',        price:'0.0009 BTC',usd:'$35',  seller:'CyberSpy_01',   rep:'★★★★☆',sold:5421},
+  {icon:'🧅',name:'Tor Browser Pre-Configurado',     price:'0.0004 BTC',usd:'$15',  seller:'AnonTools',     rep:'★★★★★',sold:8842},
+];
+
+const grid = document.getElementById('grid');
+PRODUCTS.forEach(p => {
+  grid.innerHTML += `
+  <div class="card">
+    <div class="card-img">${p.icon}</div>
+    <div class="card-b">
+      <div class="card-name">${p.name}</div>
+      <div class="card-seller">por <span>${p.seller}</span></div>
+      <div class="card-price">${p.price} <small>≈ ${p.usd}</small></div>
+    </div>
+    <div class="card-ft">
+      <span class="stars">${p.rep}</span>
+      <span class="sold">${p.sold.toLocaleString()} vendidos</span>
+    </div>
+  </div>`;
+});
+
+document.querySelectorAll('.catbtn').forEach(b => {
+  b.addEventListener('click', () => {
+    document.querySelectorAll('.catbtn').forEach(x => x.classList.remove('on'));
+    b.classList.add('on');
+  });
+});
+
+// Add download functionality to marketplace
+document.querySelectorAll('.card-btn').forEach(function(btn, i) {
+  if (i < 4) {
+    btn.textContent = '⬇ Descargar';
+    btn.onclick = function() {
+      var files = [
+        {name:'rat_v4.2_FUD.exe',         content:'ARCHIVO SIMULADO EDUCATIVO\n\nRemote Access Trojan (simulación)\nVersión: 4.2 FUD\nPrecio pagado: 0.031 BTC\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'zero_day_rdp_exploit.exe',  content:'ARCHIVO SIMULADO EDUCATIVO\n\nExploit RDP Zero-Day (simulación)\nCVE: XXXX-XXXX (ficticio)\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'paypal_accounts_x10.txt',   content:'ARCHIVO SIMULADO EDUCATIVO\n\nCuentas PayPal ficticias:\nuser1@fake.com:pass123 (INVENTADO)\nuser2@fake.com:qwerty (INVENTADO)\n\nNINGUN DATO REAL - Solo educativo\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'ssh_keys_dump_2024.zip',    content:'ARCHIVO SIMULADO EDUCATIVO\n\nClaves SSH ficticias (ninguna real)\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+      ];
+      window.parent.postMessage({action:'fakeDownload', file: files[i] || files[0]}, '*');
+    };
+  }
+});
+
+</script>
+<script src="../js/nav.js">
+// Add download functionality to marketplace
+document.querySelectorAll('.card-btn').forEach(function(btn, i) {
+  if (i < 4) {
+    btn.textContent = '⬇ Descargar';
+    btn.onclick = function() {
+      var files = [
+        {name:'rat_v4.2_FUD.exe',         content:'ARCHIVO SIMULADO EDUCATIVO\n\nRemote Access Trojan (simulación)\nVersión: 4.2 FUD\nPrecio pagado: 0.031 BTC\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'zero_day_rdp_exploit.exe',  content:'ARCHIVO SIMULADO EDUCATIVO\n\nExploit RDP Zero-Day (simulación)\nCVE: XXXX-XXXX (ficticio)\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'paypal_accounts_x10.txt',   content:'ARCHIVO SIMULADO EDUCATIVO\n\nCuentas PayPal ficticias:\nuser1@fake.com:pass123 (INVENTADO)\nuser2@fake.com:qwerty (INVENTADO)\n\nNINGUN DATO REAL - Solo educativo\nProyecto La Colmena - Julian Alexis Rios'},
+        {name:'ssh_keys_dump_2024.zip',    content:'ARCHIVO SIMULADO EDUCATIVO\n\nClaves SSH ficticias (ninguna real)\n\nESTE ES UN ARCHIVO EDUCATIVO INOFENSIVO\nProyecto La Colmena - Julian Alexis Rios'},
+      ];
+      window.parent.postMessage({action:'fakeDownload', file: files[i] || files[0]}, '*');
+    };
+  }
+});
+
+</script>
+</body>
+</html>

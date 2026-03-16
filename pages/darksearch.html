@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>DarkSearch — Hidden Web Search</title>
+<link rel="stylesheet" href="../css/shared.css">
+<style>
+body{background:#0c0c10;color:#bbb;min-height:100vh}
+.hdr{background:#090910;border-bottom:1px solid #1a1a22;padding:9px 20px;
+  display:flex;align-items:center;gap:14px}
+.logo-big{font-size:19px;font-weight:700;letter-spacing:2px;white-space:nowrap}
+.d{color:#4488ff}.a{color:#8844ff}.r{color:#ff4488}.k{color:#44ff88}
+.bar{flex:1;display:flex;gap:0;max-width:560px;background:#131318;
+  border:1px solid #2a2a35;border-radius:20px;overflow:hidden}
+.bar input{flex:1;background:none;border:none;outline:none;color:#ddd;
+  font-family:var(--font);font-size:13px;padding:7px 15px;letter-spacing:.3px}
+.bar input::placeholder{color:#2a2a35}
+.bar button{background:#4488ff;border:none;color:#fff;font-family:var(--font);
+  font-size:10px;font-weight:700;padding:0 18px;cursor:pointer;letter-spacing:1px;transition:background .15s}
+.bar button:hover{background:#3377ee}
+.nav-links{display:flex;gap:14px}
+.nav-links a{color:#444;font-size:11px;cursor:pointer;transition:color .15s}
+.nav-links a:hover,.nav-links a.on{color:#4488ff}
+
+/* Home */
+.home{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  min-height:75vh;gap:24px}
+.home-logo{font-size:44px;font-weight:700;letter-spacing:3px}
+.home-bar{display:flex;max-width:520px;width:100%;background:#131318;
+  border:1px solid #2a2a35;border-radius:4px;overflow:hidden}
+.home-bar input{flex:1;background:none;border:none;outline:none;color:#ddd;
+  font-family:var(--font);font-size:14px;padding:11px 14px}
+.home-bar button{background:#4488ff;border:none;color:#fff;font-family:var(--font);
+  font-size:11px;font-weight:700;padding:0 22px;cursor:pointer;letter-spacing:1px}
+.home-links{display:flex;gap:18px;font-size:12px}
+.home-links a{color:#4488ff;cursor:pointer;text-decoration:none}
+.home-links a:hover{text-decoration:underline}
+.home-notice{font-size:10px;color:#2a2a35;letter-spacing:.4px;text-align:center}
+
+/* Results */
+.results{padding:14px 22px;max-width:740px}
+.rstats{font-size:11px;color:#333;margin-bottom:18px}
+.rstats span{color:#666}
+.result{margin-bottom:20px}
+.r-url{font-size:11px;color:#44dd88;margin-bottom:3px;letter-spacing:.3px}
+.r-title{font-size:16px;color:#4488ff;cursor:pointer;display:block;margin-bottom:4px;text-decoration:none}
+.r-title:hover{text-decoration:underline}
+.r-desc{font-size:12px;color:#555;line-height:1.6}
+.r-desc em{color:#bbb;font-style:normal;font-weight:700}
+.r-tags{margin-top:5px;display:flex;gap:5px;flex-wrap:wrap}
+.rtag{font-size:9px;padding:1px 6px;border-radius:2px;
+  background:#131318;border:1px solid #2a2a35;color:#333}
+.pager{display:flex;gap:5px;margin-top:26px;align-items:center}
+.pbtn{background:#131318;border:1px solid #2a2a35;color:#666;font-family:var(--font);
+  font-size:11px;padding:4px 10px;border-radius:3px;cursor:pointer;transition:all .15s}
+.pbtn.on,.pbtn:hover{border-color:#4488ff;color:#4488ff}
+</style>
+</head>
+<body>
+
+<div id="main"></div>
+
+<script>
+const RESULTS = [
+  {url:'marketcore.onion',  title:'MarketCore — Mercado Anónimo',
+   desc:'El principal mercado anónimo para bienes digitales. 10,000+ listados. Vendedores PGP verificados. XMR/BTC aceptados.',tags:['market','darkweb','btc']},
+  {url:'cryptoforum.onion', title:'CryptoForum — Foro de Discusión Underground',
+   desc:'Foro para investigadores de seguridad y defensores de la privacidad. Activo desde 2016. 84K+ miembros.',tags:['foro','comunidad']},
+  {url:'shadowwiki.onion',  title:'ShadowWiki — La Enciclopedia Oculta',
+   desc:'8,492 artículos sobre herramientas de anonimato, criptografía, OPSEC e historia de la dark web.',tags:['wiki','conocimiento']},
+  {url:'datavault.onion',   title:'DataVault — Repositorio Cifrado de Archivos',
+   desc:'Hosting anónimo de archivos y entregas de datos. Cifrado AES-256. Sin registros.',tags:['archivos','hosting']},
+  {url:'mailnode.onion',    title:'MailNode — Correo Anónimo Cifrado',
+   desc:'Servicio de correo completamente anónimo. Integración PGP incorporada. 100MB gratis.',tags:['correo','privacidad']},
+  {url:'ghostchat.onion',   title:'GhostChat — Chat Anónimo en Tiempo Real',
+   desc:'Salas de chat cifradas de extremo a extremo. Sin registro. Sin logs. Mensajes se autodestruyen.',tags:['chat','realtime']},
+  {url:'cryptex.onion',     title:'CrypteX — Exchange P2P de Criptomonedas',
+   desc:'Exchange peer-to-peer sin KYC. Opera BTC, XMR, ETH, ZEC. Bajas comisiones.',tags:['cripto','exchange']},
+  {url:'neonews.onion',     title:'NeoNews — Cable de Noticias Underground',
+   desc:'Noticias de la dark web. Periodismo basado en filtraciones. Publicación resistente a censura.',tags:['noticias','medios']},
+  {url:'blackboard.onion',  title:'BlackBoard — Bolsa de Trabajo Anónima',
+   desc:'Listados de trabajo anónimo. Investigación de seguridad, pruebas de penetración, servicios digitales.',tags:['trabajo','gigs']},
+  {url:'phantomvpn.onion',  title:'PhantomVPN — Servicio VPN Sin Registros',
+   desc:'VPN de grado militar sin logs. 40+ jurisdicciones. Tor-sobre-VPN. Pago anónimo con XMR.',tags:['vpn','privacidad']},
+  {url:'idforge.onion',     title:'ID Forge — Estudio de Simulación de Documentos',
+   desc:'Diseña y previsualiza documentos de identidad ficticios para escritores y desarrolladores.',tags:['herramientas','simulación']},
+];
+
+function q(){
+  const p = new URLSearchParams(window.location.search);
+  return p.get('q') || '';
+}
+
+function renderHome(){
+  document.getElementById('main').innerHTML = `
+  <div class="home">
+    <div class="home-logo">
+      <span class="d">D</span><span class="a">A</span><span class="r">R</span><span class="k">K</span><span style="color:#444">SEARCH</span>
+    </div>
+    <div style="font-size:10px;color:#2a2a35;letter-spacing:2px;margin-top:-18px">BUSCA LA WEB OCULTA</div>
+    <div class="home-bar">
+      <input type="text" id="hinp" placeholder="Buscar servicios .onion…" spellcheck="false">
+      <button onclick="doSearch()">BUSCAR</button>
+    </div>
+    <div class="home-links">
+      <a>Avanzado</a><a>Índice</a><a>Acerca</a><a>Enviar Sitio</a>
+    </div>
+    <div class="home-notice">Sin registros. Sin rastreo. Sin cookies. 847,000+ servicios .onion indexados.</div>
+  </div>`;
+  document.getElementById('hinp').addEventListener('keydown',e=>e.key==='Enter'&&doSearch());
+}
+
+function renderResults(query){
+  const filtered = RESULTS.filter(r=>
+    r.title.toLowerCase().includes(query.toLowerCase())||
+    r.desc.toLowerCase().includes(query.toLowerCase())||
+    r.tags.some(t=>t.includes(query.toLowerCase()))
+  );
+  const rs = filtered.length>0?filtered:RESULTS;
+  document.getElementById('main').innerHTML = `
+  <div class="hdr">
+    <div class="logo-big"><span class="d">D</span><span class="a">A</span><span class="r">R</span><span class="k">K</span><span style="color:#333">SEARCH</span></div>
+    <div class="bar">
+      <input type="text" id="sinp" value="${query}" spellcheck="false">
+      <button onclick="doSearch2()">BUSCAR</button>
+    </div>
+    <div class="nav-links">
+      <a class="on">Todo</a><a>Servicios</a><a>Foros</a><a>Mercados</a><a>Archivos</a>
+    </div>
+  </div>
+  <div class="results">
+    <div class="rstats">Aproximadamente <span>${rs.length}</span> resultados para "<span>${query}</span>" — 0.041 segundos</div>
+    ${rs.map(r=>`
+    <div class="result">
+      <div class="r-url">⬡ ${r.url}</div>
+      <a class="r-title" onclick="window.parent.postMessage({action:'navigate',url:'${r.url}'},'*')">${r.title}</a>
+      <div class="r-desc">${r.desc.replace(new RegExp(query,'gi'),m=>`<em>${m}</em>`)}</div>
+      <div class="r-tags">${r.tags.map(t=>`<span class="rtag">${t}</span>`).join('')}</div>
+    </div>`).join('')}
+    <div class="pager">
+      <button class="pbtn on">1</button>
+      <button class="pbtn">2</button>
+      <button class="pbtn">3</button>
+      <span style="color:#2a2a35;padding:0 6px;font-size:11px">…</span>
+      <button class="pbtn">24</button>
+      <button class="pbtn">Siguiente →</button>
+    </div>
+  </div>`;
+  document.getElementById('sinp').addEventListener('keydown',e=>e.key==='Enter'&&doSearch2());
+}
+
+function doSearch(){
+  const v=document.getElementById('hinp').value.trim();
+  if(v) window.parent.postMessage({action:'navigate',url:'darksearch.onion?q='+encodeURIComponent(v},'*'));
+}
+function doSearch2(){
+  const v=document.getElementById('sinp').value.trim();
+  if(v) window.parent.postMessage({action:'navigate',url:'darksearch.onion?q='+encodeURIComponent(v},'*'));
+}
+
+const query = q();
+if(query) renderResults(query); else renderHome();
+</script>
+<script src="../js/nav.js"></script>
+</body>
+</html>

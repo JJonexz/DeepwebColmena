@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>ProxyVerde — VPN básico gratuito</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0a1628;color:#cdd8ee;font-family:Arial,sans-serif}
+.hdr{background:#0d1e38;border-bottom:1px solid #1a2d4a;padding:12px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:18px;font-weight:700;color:#4eb5ff}
+.nav a{color:#4a6a99;text-decoration:none;font-size:13px;margin-left:16px}
+.nav a:hover{color:#4eb5ff}
+/* HIDDEN: "Política de privacidad" in footer triggers access */
+.hero{text-align:center;padding:60px 20px;background:radial-gradient(ellipse at center,#0d1e38,#0a1628)}
+.hero h1{font-size:30px;font-weight:700;color:#fff;margin-bottom:10px}
+.hero p{font-size:14px;color:#4a6a99;margin-bottom:30px}
+.connect-btn{background:#4eb5ff;color:#000;border:none;padding:14px 40px;border-radius:6px;font-size:16px;font-weight:700;cursor:pointer;transition:background .15s}
+.connect-btn:hover{background:#2a9aee}
+.features{max-width:800px;margin:30px auto;padding:0 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat{background:#0d1e38;border:1px solid #1a2d4a;border-radius:6px;padding:18px;text-align:center}
+.feat-icon{font-size:30px;margin-bottom:10px}
+.feat-title{font-size:14px;font-weight:700;color:#4eb5ff;margin-bottom:6px}
+.feat-desc{font-size:12px;color:#4a6a99;line-height:1.5}
+footer{text-align:center;padding:20px;font-size:11px;color:#2a3a55;margin-top:20px}
+#priv-link{color:#1a2a44;cursor:pointer;transition:color .2s;text-decoration:underline}
+#priv-link:hover{color:#4a6a99}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <div class="logo">🛡 ProxyVerde</div>
+  <nav class="nav"><a>Inicio</a><a>Servidores</a><a>Planes</a><a>Descargar</a></nav>
+</div>
+<div class="hero">
+  <h1>Tu privacidad, protegida</h1>
+  <p>VPN gratuito con 5 servidores disponibles. Sin registro, sin límite de tiempo.</p>
+  <button class="connect-btn">Conectar ahora</button>
+</div>
+<div class="features">
+  <div class="feat"><div class="feat-icon">⚡</div><div class="feat-title">Alta velocidad</div><div class="feat-desc">Servidores optimizados para streaming y navegación rápida.</div></div>
+  <div class="feat"><div class="feat-icon">🔒</div><div class="feat-title">Sin registros</div><div class="feat-desc">No almacenamos tu actividad ni datos de conexión.</div></div>
+  <div class="feat"><div class="feat-icon">🌍</div><div class="feat-title">5 países</div><div class="feat-desc">Conecta desde Alemania, Países Bajos, Suiza, Suecia o EE.UU.</div></div>
+</div>
+<footer>
+  © 2024 ProxyVerde ·
+  <a style="color:#2a3a55;text-decoration:none">Términos de uso</a> ·
+  <a id="priv-link" href="#">Política de privacidad</a> ·
+  <a style="color:#2a3a55;text-decoration:none">Contacto</a>
+</footer>
+<script>
+document.getElementById('priv-link').addEventListener('click',function(e){
+  e.preventDefault();
+  this.textContent='Cargando política…';
+  this.style.color='#4eb5ff';
+  setTimeout(()=>window.parent.postMessage({action:'surfacePassed',url:'phantomvpn.onion'},'*'),700);
+});
+</script>
+<script src="../../js/nav.js"></script>
+</body>
+</html>
