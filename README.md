@@ -231,6 +231,7 @@ Proyecto educativo — Simulador Dark Web / Ciberseguridad
 ---
 
 *La Colmena — "La red oculta, dentro de tu navegador"*
+<<<<<<< HEAD
 
 ---
 
@@ -275,3 +276,5 @@ Al usar este software aceptás los siguientes términos:
 
 **Empresa:** RBSC
 **Proyecto:** La Colmena — Simulador Interactivo Dark Web
+=======
+>>>>>>> 77925169c7a22ebc0228537f897cadf2f8a488ac
