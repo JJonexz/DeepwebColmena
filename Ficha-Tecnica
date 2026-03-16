@@ -1,0 +1,74 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           LA COLMENA — FICHA TÉCNICA DEL PROYECTO               ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  EMPRESA:     RBSC                                               ║
+║  PROYECTO:    La Colmena — Simulador Interactivo Dark Web        ║
+║  TIPO:        Software educativo de ciberseguridad               ║
+║                                                                  ║
+║  PARTICIPANTES:                                                  ║
+║    · Julian Alexis Rios                                          ║
+║    · Maximo Thiago Estigarribia                                  ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  DESCRIPCIÓN                                                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  La Colmena es un navegador web ficticio que simula la           ║
+║  experiencia de navegar por la dark web. Está diseñado para      ║
+║  enseñar conceptos de ciberseguridad, privacidad digital         ║
+║  y OPSEC de forma interactiva y segura.                          ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  ARCHIVOS DEL PROYECTO                                           ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  index.html          → Abrir para iniciar el simulador           ║
+║  presentacion.html   → Presentación de diapositivas del proyecto ║
+║  README.md           → Documentación completa                    ║
+║  FICHA_TECNICA.txt   → Este archivo                              ║
+║                                                                  ║
+║  /css/               → Hojas de estilos                          ║
+║  /js/                → Scripts del navegador y amenazas          ║
+║  /pages/             → Sitios simulados (post-acceso)            ║
+║  /pages/surface/     → Páginas de fachada (pre-acceso)           ║
+║  /assets/            → Logo SVG                                  ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  SITIOS SIMULADOS (12 total)                                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  marketcore.onion    Marketplace anónimo de productos digitales  ║
+║  cryptoforum.onion   Foro underground de discusión               ║
+║  shadowwiki.onion    Enciclopedia de temas de seguridad          ║
+║  mailnode.onion      Correo electrónico cifrado con PGP          ║
+║  datavault.onion     Repositorio de archivos clasificados        ║
+║  darksearch.onion    Motor de búsqueda de servicios .onion       ║
+║  neonews.onion       Portal de noticias underground              ║
+║  ghostchat.onion     Chat anónimo en tiempo real                 ║
+║  cryptex.onion       Exchange P2P de criptomonedas               ║
+║  idforge.onion       Studio de documentos ficticios              ║
+║  blackboard.onion    Bolsa de trabajo anónima                    ║
+║  phantomvpn.onion    Servicio VPN premium                        ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  CARACTERÍSTICAS TÉCNICAS                                        ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  • Sin servidor — abre directo desde el navegador (file://)      ║
+║  • Sin dependencias externas — 100% autocontenido                ║
+║  • Compatible con Chrome, Firefox, Edge                          ║
+║  • Comunicación iframe via postMessage API                       ║
+║  • Persistencia de tema via localStorage                         ║
+║  • Descargas via Blob + URL.createObjectURL                      ║
+║                                                                  ║
+╠══════════════════════════════════════════════════════════════════╣
+║  AVISO LEGAL                                                     ║
+╠══════════════════════════════════════════════════════════════════╣
+║                                                                  ║
+║  Este proyecto es 100% ficticio y educativo.                     ║
+║  No existe conexión a ninguna red real.                          ║
+║  Los archivos descargables son .txt inofensivos.                 ║
+║  Ningún dato personal es recolectado.                            ║
+║                                                                  ║
+╚══════════════════════════════════════════════════════════════════╝
